@@ -117,6 +117,28 @@ static void rijndael_shiftrows(void *block, size_t block_size) {
     }
 }
 
+static void rijndael_rshiftrows(void *block, size_t block_size) {
+    uint8_t *bytes = (uint8_t*)block;
+    size_t i, j, k, n[4] = { 0, 1, 2, 3 };
+
+    if (block_size > 7) {
+        n[2] = 3;
+    }
+    if (block_size > 6) {
+        n[3] = 4;
+    }
+
+    for (i = 0; i < 4; ++i) {
+        uint8_t c[4] = { bytes[i], bytes[4+i], bytes[8+i], bytes[12+i] };
+        for (j = 0; j < block_size - n[i]; ++j) {
+            bytes[j * 4 + i] = bytes[((j + block_size - n[i]) % block_size) * 4 + i];
+        }
+        for (; j < block_size; ++j) {
+            bytes[j * 4 + i] = c[(j + block_size - n[i]) % 4];
+        }
+    }
+}
+
 static void rijndael_mixcolumns(void *block, size_t block_size) {
     uint8_t *bytes = (uint8_t*)block;
     size_t i;
@@ -127,6 +149,19 @@ static void rijndael_mixcolumns(void *block, size_t block_size) {
         bytes[4*i+1] = galois(a[1], 2) ^ galois(a[2], 3) ^ a[3] ^ a[0];
         bytes[4*i+2] = galois(a[2], 2) ^ galois(a[3], 3) ^ a[0] ^ a[1];
         bytes[4*i+3] = galois(a[3], 2) ^ galois(a[0], 3) ^ a[1] ^ a[2];
+    }
+}
+
+static void rijndael_rmixcolumns(void *block, size_t block_size) {
+    uint8_t *bytes = (uint8_t*)block;
+    size_t i;
+
+    for (i = 0; i < block_size; ++i) {
+        uint8_t a[4] = { bytes[4*i+0], bytes[4*i+1], bytes[4*i+2], bytes[4*i+3] };
+        bytes[4*i+0] = galois(a[0], 14) ^ galois(a[1], 11) ^ galois(a[2], 13) ^ galois(a[3], 9);
+        bytes[4*i+1] = galois(a[1], 14) ^ galois(a[2], 11) ^ galois(a[3], 13) ^ galois(a[0], 9);
+        bytes[4*i+2] = galois(a[2], 14) ^ galois(a[3], 11) ^ galois(a[0], 13) ^ galois(a[1], 9);
+        bytes[4*i+3] = galois(a[3], 14) ^ galois(a[0], 11) ^ galois(a[1], 13) ^ galois(a[2], 9);
     }
 }
 
@@ -148,7 +183,7 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
     size_t key_cols = (num_rounds + 1) * block_size;
 
     /* allocate space for expanded key */
-    state->key = malloc(key_cols * sizeof *state->key);
+    state->key = malloc(2 * key_cols * sizeof *state->key);
 
     if (!state->key) return 0;
 
@@ -168,9 +203,7 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
         state->key[k] = key[k*4+0] | (key[k*4+1]<<8) | (key[k*4+2]<<16) | (key[k*4+3]<<24);
     }
 
-/*
     TRACE("k (after first round) == %u", k);
-*/
 
     for (i = 0; k < key_cols; ++k) {
         uint32_t n = state->key[k - 1];
@@ -185,9 +218,15 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
         state->key[k] = n;
     }
 
-/*
+    for (i = 0; i <= num_rounds; ++i) {
+        for (j = 0; j < block_size; ++j) {
+            state->key[key_cols+i*block_size+j] = state->key[(num_rounds - i)*block_size+j];
+        }
+    }
+
+    rijndael_rmixcolumns(&(state->key[key_cols+block_size]), key_cols-2*block_size);
+
     TRACE("k (after last round) == %u", k);
-*/
 
     return 1;
 }
@@ -210,7 +249,7 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
     for (i = 0; i < size; i += 4 * state->block_size) {
         PRINT("Round 0");
 
-        for (j = k = 0; j < state->block_size; ++j) {
+        for (j = 0; j < state->block_size; ++j) {
             block[j]  = indata[i + j * 4 + 0] <<  0;
             block[j] |= indata[i + j * 4 + 1] <<  8;
             block[j] |= indata[i + j * 4 + 2] << 16;
@@ -275,8 +314,89 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
 }
 
 size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *plaintext, size_t size) {
-    /* TODO */
-    return 0;
+    uint8_t *indata, *outdata;
+    size_t i, j, k, r;
+
+    size_t n;
+
+    indata = (uint8_t*)ciphertext;
+    outdata = (uint8_t*)plaintext;
+
+    uint32_t block[8]; /* max size */
+
+    /* The AddRoundKey step is kept inline below because it depends on local
+     * state in the variable 'k'.
+     */
+
+    for (i = 0; i < size; i += 4 * state->block_size) {
+        PRINT("Round 0");
+
+        for (j = 0; j < state->block_size; ++j) {
+            block[j]  = indata[i + j * 4 + 0] <<  0;
+            block[j] |= indata[i + j * 4 + 1] <<  8;
+            block[j] |= indata[i + j * 4 + 2] << 16;
+            block[j] |= indata[i + j * 4 + 3] << 24;
+        }
+
+        PRINT_BLOCK(block, "    Input Block:");
+
+        for (j = 0, k = state->num_rounds * state->block_size; j < state->block_size; ++j) {
+            block[j] ^= state->key[k + j];
+        }
+        k -= state->block_size;
+
+        PRINT_BLOCK(block, "    AddRoundKey:");
+
+        rijndael_rshiftrows(block, state->block_size);
+
+        PRINT_BLOCK(block, "    ShiftRows:  ");
+
+        rijndael_subbytes(block, state->block_size, rsbox);
+
+        PRINT_BLOCK(block, "    SubBytes:   ");
+
+        for (r = 1; r < state->num_rounds; ++r) {
+            PRINT("Round %d", r);
+
+            for (j = 0; j < state->block_size; ++j) {
+                block[j] ^= state->key[k + j];
+            }
+            k -= state->block_size;
+
+            PRINT_BLOCK(block, "    AddRoundKey:");
+
+            rijndael_rmixcolumns(block, state->block_size);
+
+            PRINT_BLOCK(block, "    MixColumns: ");
+
+            rijndael_rshiftrows(block, state->block_size);
+
+            PRINT_BLOCK(block, "    ShiftRows:  ");
+
+            rijndael_subbytes(block, state->block_size, rsbox);
+
+            PRINT_BLOCK(block, "    SubBytes:   ");
+        }
+
+        PRINT("Final Round");
+
+        TRACE("k == %u", k);
+
+        for (j = 0; j < state->block_size; ++j) {
+            block[j] ^= state->key[k + j];
+        }
+
+        PRINT_BLOCK(block, "    AddRoundKey:");
+
+        for (j = 0; j < state->block_size; ++j) {
+            outdata[i + j * 4 + 0] = block[j] >>  0;
+            outdata[i + j * 4 + 1] = block[j] >>  8;
+            outdata[i + j * 4 + 2] = block[j] >> 16;
+            outdata[i + j * 4 + 3] = block[j] >> 24;
+        }
+    }
+
+    return i;
 }
 
 void rijndael_finish(rijndael_state *state) {
