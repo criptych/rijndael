@@ -45,10 +45,6 @@ static uint8_t galois(uint8_t a, uint8_t b) {
     return n;
 }
 
-static inline uint32_t ror32(uint32_t n, size_t bits) {
-    return (n >> bits) | (n << (32 - bits));
-}
-
 static void rijndael_init_tables() {
     static int initialized = 0;
 
@@ -218,7 +214,7 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
     for (i = 0; k < key_cols; ++k) {
         uint32_t n = state->key[k - 1];
         if ((k % key_size) == 0) {
-            n = ror32(n, 8);
+            n = (n >> 8) | (n << 24);
             rijndael_subbytes(&n, 1, fsbox);
             n ^= rcon[i++];
         } else if ((key_size > 6) && ((k % key_size) == 4)) {
