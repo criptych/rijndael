@@ -51,8 +51,8 @@ TEST_CASE("demo") {
     CHECK(state.key[42] == 0xc80c3fe1);
     CHECK(state.key[43] == 0xa60c63b6);
 
-    CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
-    CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
+    REQUIRE(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
 
     aes_finish(&state);
 }
@@ -68,8 +68,8 @@ TEST_CASE("ECBGFSbox128") {
 
             uint8_t out[sizeof(CIPHERTEXT)];
             REQUIRE(aes_begin(&state, KEY, 128));
-            CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
-            CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
+            REQUIRE(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+            REQUIRE(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
         }
 
         SECTION("Test 1") {
@@ -79,8 +79,8 @@ TEST_CASE("ECBGFSbox128") {
 
             uint8_t out[sizeof(CIPHERTEXT)];
             REQUIRE(aes_begin(&state, KEY, 128));
-            CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
-            CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
+            REQUIRE(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+            REQUIRE(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
         }
 
         SECTION("Test 2") {
@@ -90,8 +90,8 @@ TEST_CASE("ECBGFSbox128") {
 
             uint8_t out[sizeof(CIPHERTEXT)];
             REQUIRE(aes_begin(&state, KEY, 128));
-            CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
-            CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
+            REQUIRE(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+            REQUIRE(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
         }
 
         SECTION("Test 3") {
@@ -101,8 +101,8 @@ TEST_CASE("ECBGFSbox128") {
 
             uint8_t out[sizeof(CIPHERTEXT)];
             REQUIRE(aes_begin(&state, KEY, 128));
-            CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
-            CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
+            REQUIRE(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+            REQUIRE(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
         }
 
         SECTION("Test 4") {
@@ -112,8 +112,8 @@ TEST_CASE("ECBGFSbox128") {
 
             uint8_t out[sizeof(CIPHERTEXT)];
             REQUIRE(aes_begin(&state, KEY, 128));
-            CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
-            CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
+            REQUIRE(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+            REQUIRE(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
         }
 
         SECTION("Test 5") {
@@ -123,8 +123,8 @@ TEST_CASE("ECBGFSbox128") {
 
             uint8_t out[sizeof(CIPHERTEXT)];
             REQUIRE(aes_begin(&state, KEY, 128));
-            CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
-            CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
+            REQUIRE(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+            REQUIRE(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
         }
 
         SECTION("Test 6") {
@@ -134,8 +134,8 @@ TEST_CASE("ECBGFSbox128") {
 
             uint8_t out[sizeof(CIPHERTEXT)];
             REQUIRE(aes_begin(&state, KEY, 128));
-            CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
-            CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
+            REQUIRE(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+            REQUIRE(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
         }
     }
 
@@ -153,8 +153,8 @@ TEST_CASE("ECBGFSbox192") {
 
             uint8_t out[sizeof(CIPHERTEXT)];
             REQUIRE(aes_begin(&state, KEY, 192));
-            CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
-            CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
+            REQUIRE(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+            REQUIRE(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
         }
 
         SECTION("Test 1") {
@@ -164,8 +164,8 @@ TEST_CASE("ECBGFSbox192") {
 
             uint8_t out[sizeof(CIPHERTEXT)];
             REQUIRE(aes_begin(&state, KEY, 192));
-            CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
-            CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
+            REQUIRE(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+            REQUIRE(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
         }
 
         SECTION("Test 2") {
@@ -175,8 +175,8 @@ TEST_CASE("ECBGFSbox192") {
 
             uint8_t out[sizeof(CIPHERTEXT)];
             REQUIRE(aes_begin(&state, KEY, 192));
-            CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
-            CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
+            REQUIRE(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+            REQUIRE(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
         }
 
         SECTION("Test 3") {
@@ -186,8 +186,8 @@ TEST_CASE("ECBGFSbox192") {
 
             uint8_t out[sizeof(CIPHERTEXT)];
             REQUIRE(aes_begin(&state, KEY, 192));
-            CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
-            CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
+            REQUIRE(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+            REQUIRE(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
         }
 
         SECTION("Test 4") {
@@ -197,8 +197,8 @@ TEST_CASE("ECBGFSbox192") {
 
             uint8_t out[sizeof(CIPHERTEXT)];
             REQUIRE(aes_begin(&state, KEY, 192));
-            CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
-            CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
+            REQUIRE(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+            REQUIRE(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
         }
 
         SECTION("Test 5") {
@@ -208,8 +208,8 @@ TEST_CASE("ECBGFSbox192") {
 
             uint8_t out[sizeof(CIPHERTEXT)];
             REQUIRE(aes_begin(&state, KEY, 192));
-            CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
-            CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
+            REQUIRE(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+            REQUIRE(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
         }
     }
 
