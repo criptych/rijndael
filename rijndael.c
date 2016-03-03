@@ -257,13 +257,16 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
 
         for (j = 0; j < state->block_size; ++j) {
             block[j] ^= state->key[k++];
+        }
+
+        PRINT_BLOCK(block, "    AddRoundKey:");
+
+        for (j = 0; j < state->block_size; ++j) {
             outdata[i + j * 4 + 0] = block[j] >>  0;
             outdata[i + j * 4 + 1] = block[j] >>  8;
             outdata[i + j * 4 + 2] = block[j] >> 16;
             outdata[i + j * 4 + 3] = block[j] >> 24;
         }
-
-        PRINT_BLOCK(block, "    AddRoundKey:");
     }
 
     return i;
