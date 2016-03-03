@@ -149,8 +149,10 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
         num_rounds += 6;
     }
 
+    size_t key_cols = (num_rounds + 1) * block_size;
+
     /* allocate space for expanded key */
-    state->key = malloc(((num_rounds + 1) * block_size) * sizeof *state->key);
+    state->key = malloc(key_cols * sizeof *state->key);
 
     if (!state->key) return 0;
 
@@ -174,7 +176,7 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
     TRACE("k (after first round) == %u", k);
 */
 
-    for (i = 1; i <= num_rounds; ++i) {
+    for (i = 1; i <= num_rounds && k < key_cols; ++i) {
         uint32_t n = state->key[k - 1];
         n = ror32(n, 8);
         rijndael_subbytes(&n, 1, fsbox);
@@ -182,7 +184,7 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
         n ^= rcon[i];
         state->key[k++] = n;
 
-        for (j = 1; j < block_size; ++j) {
+        for (j = 1; j < block_size && k < key_cols; ++j) {
             n = state->key[k - 1];
             n ^= state->key[k - block_size];
             state->key[k++] = n;
