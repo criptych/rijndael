@@ -99,8 +99,10 @@ static void rijndael_shiftrows(void *block, size_t block_size) {
     uint8_t *bytes = (uint8_t*)block;
     size_t i, j, k, n[4] = { 0, 1, 2, 3 };
 
-    if (block_size > 6) {
+    if (block_size > 7) {
         n[2] = 3;
+    }
+    if (block_size > 6) {
         n[3] = 4;
     }
 
