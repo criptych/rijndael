@@ -87,6 +87,14 @@ static void rijndael_init_tables() {
     }
 }
 
+static void rijndael_addroundkey(void *block, size_t block_size, const void *key) {
+    uint32_t *b = block;
+    const uint32_t *k = key;
+    for (size_t i = 0; i < block_size; ++i) {
+        b[i] ^= k[i];
+    }
+}
+
 static void rijndael_subbytes(void *block, size_t block_size, const uint8_t *sbox) {
     uint8_t *bytes = (uint8_t*)block;
     size_t count = block_size * 4, i;
@@ -244,12 +252,10 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
 
     uint32_t block[8]; /* max size */
 
-    /* The AddRoundKey step is kept inline below because it depends on local
-     * state in the variable 'k'.
-     */
-
     for (i = 0; i < size; i += 4 * state->block_size) {
         PRINT("Round 0");
+
+        uint32_t *key = state->key;
 
         for (j = 0; j < state->block_size; ++j) {
             block[j]  = indata[i + j * 4 + 0] <<  0;
@@ -260,10 +266,8 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
 
         PRINT_BLOCK(block, state->block_size*4, "    Input Block:");
 
-        for (j = k = 0; j < state->block_size; ++j) {
-            block[j] ^= state->key[k++];
-        }
-
+        rijndael_addroundkey(block, state->block_size, key);
+        key += state->block_size;
         PRINT_BLOCK(block, state->block_size*4, "    AddRoundKey:");
 
         for (r = 1; r < state->num_rounds; ++r) {
@@ -278,9 +282,8 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
             rijndael_mixcolumns(block, state->block_size);
             PRINT_BLOCK(block, state->block_size*4, "    MixColumns: ");
 
-            for (j = 0; j < state->block_size; ++j) {
-                block[j] ^= state->key[k++];
-            }
+            rijndael_addroundkey(block, state->block_size, key);
+            key += state->block_size;
             PRINT_BLOCK(block, state->block_size*4, "    AddRoundKey:");
         }
 
@@ -292,9 +295,7 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
         rijndael_shiftrows(block, state->block_size);
         PRINT_BLOCK(block, state->block_size*4, "    ShiftRows:  ");
 
-        for (j = 0; j < state->block_size; ++j) {
-            block[j] ^= state->key[k++];
-        }
+        rijndael_addroundkey(block, state->block_size, key);
         PRINT_BLOCK(block, state->block_size*4, "    AddRoundKey:");
 
         for (j = 0; j < state->block_size; ++j) {
@@ -319,12 +320,10 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
 
     uint32_t block[8]; /* max size */
 
-    /* The AddRoundKey step is kept inline below because it depends on local
-     * state in the variable 'k'.
-     */
-
     for (i = 0; i < size; i += 4 * state->block_size) {
         PRINT("Round 0");
+
+        uint32_t *key = state->key + state->block_size * state->num_rounds;
 
         for (j = 0; j < state->block_size; ++j) {
             block[j]  = indata[i + j * 4 + 0] <<  0;
@@ -335,9 +334,7 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
 
         PRINT_BLOCK(block, state->block_size*4, "    Input Block:");
 
-        for (j = 0, k = state->num_rounds * state->block_size; j < state->block_size; ++j) {
-            block[j] ^= state->key[k + j];
-        }
+        rijndael_addroundkey(block, state->block_size, key);
         k -= state->block_size;
         PRINT_BLOCK(block, state->block_size*4, "    AddRoundKey:");
 
@@ -350,9 +347,7 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
         for (r = 1; r < state->num_rounds; ++r) {
             PRINT("Round %d", r);
 
-            for (j = 0; j < state->block_size; ++j) {
-                block[j] ^= state->key[k + j];
-            }
+            rijndael_addroundkey(block, state->block_size, key);
             k -= state->block_size;
             PRINT_BLOCK(block, state->block_size*4, "    AddRoundKey:");
 
@@ -370,9 +365,7 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
 
         TRACE("k == %u", k);
 
-        for (j = 0; j < state->block_size; ++j) {
-            block[j] ^= state->key[k + j];
-        }
+        rijndael_addroundkey(block, state->block_size, key);
         PRINT_BLOCK(block, state->block_size*4, "    AddRoundKey:");
 
         for (j = 0; j < state->block_size; ++j) {
