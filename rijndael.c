@@ -91,17 +91,10 @@ static const uint8_t rcon[256] = {
 };
 
 static uint8_t galois(uint8_t a, uint8_t b) {
-    uint16_t n = 0;
-    while (a) {
-        if (a & 1) {
-            n ^= b;
-        }
-        if (b & 0x80) {
-            b <<= 1;
-            b ^= 0x1b;
-        } else {
-            b <<= 1;
-        }
+    uint8_t n = 0;
+    for (uint8_t i = 0; i < 8; ++i) {
+        n ^= (a & 1) * b;
+        b = (b << 1) ^ ((b >> 7) * 0x1b);
         a >>= 1;
     }
     return n;
