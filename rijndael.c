@@ -80,7 +80,7 @@ static void rijndael_init_tables() {
         uint8_t r = 1;
         for (size_t i = 0; i < 256; ++i) {
             rcon[i] = r;
-            r = galois(r, 2);
+            r = (r << 1) ^ ((r >> 7) * 0x1b);
         }
 
         initialized = 1;
