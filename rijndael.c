@@ -199,7 +199,7 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
     indata = (uint8_t*)plaintext;
     outdata = (uint8_t*)ciphertext;
 
-    uint32_t *block = alloca(state->block_size * sizeof *block);
+    uint32_t block[8]; /* max size */
 
     /* The AddRoundKey step is kept inline below because it depends on local
      * state in the variable 'k'.
