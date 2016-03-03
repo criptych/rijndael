@@ -78,8 +78,8 @@ static void rijndael_init_tables() {
 
         TRACE("Initialize `rcon' table");
         uint8_t r = 1;
-        for (size_t i = 1; i <= 256; ++i) {
-            rcon[i&255] = r;
+        for (size_t i = 0; i < 256; ++i) {
+            rcon[i] = r;
             r = galois(r, 2);
         }
 
@@ -170,19 +170,17 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
     TRACE("k (after first round) == %u", k);
 */
 
-    for (i = 1; i <= num_rounds && k < key_cols; ++i) {
+    for (i = 0; k < key_cols; ++k) {
         uint32_t n = state->key[k - 1];
-        n = ror32(n, 8);
-        rijndael_subbytes(&n, 1, fsbox);
-        n ^= state->key[k - block_size];
-        n ^= rcon[i];
-        state->key[k++] = n;
-
-        for (j = 1; j < block_size && k < key_cols; ++j) {
-            n = state->key[k - 1];
-            n ^= state->key[k - block_size];
-            state->key[k++] = n;
+        if ((k % key_size) == 0) {
+            n = ror32(n, 8);
+            rijndael_subbytes(&n, 1, fsbox);
+            n ^= rcon[i++];
+        } else if ((key_size > 6) && ((k % key_size) == 4)) {
+            rijndael_subbytes(&n, 1, fsbox);
         }
+        n ^= state->key[k - key_size];
+        state->key[k] = n;
     }
 
 /*
