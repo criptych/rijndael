@@ -368,6 +368,9 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
 }
 
 void rijndael_finish(rijndael_state *state) {
+    state->key_size = 0;
+    state->block_size = 0;
+    state->num_rounds = 0;
     if (state->key) {
         free(state->key);
         state->key = NULL;
