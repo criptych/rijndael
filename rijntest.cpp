@@ -1111,7 +1111,7 @@ TEST_CASE("ECBKeySbox192-encrypt", "[ECB][Key][Sbox][192][ENCRYPT]") {
     aes_finish(&state);
 }
 
-TEST_CASE("ECBKeySbox192-decrypt", "") {
+TEST_CASE("ECBKeySbox192-decrypt", "[ECB][Key][Sbox][192][DECRYPT]") {
     aes_state state;
 
     SECTION("Test 0") {
