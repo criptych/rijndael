@@ -60,20 +60,23 @@ ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-std=c++17")     # Enable C++17 (if avail
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-msse")          # Enable SSE opcodes
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-msse2")         # Enable SSE2 opcodes
 
-ADD_LIBRARY(rijndael
-    rijndael.h
-    rijndael.c
-)
+ADD_LIBRARY(rijndael rijndael.h rijndael.c)
+TARGET_INCLUDE_DIRECTORIES(rijndael PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-FILE(GLOB TESTS tests/*.cpp)
+FILE(GLOB ECB_TESTS tests/ECB*.cpp)
+FILE(GLOB CBC_TESTS tests/CBC*.cpp)
+FILE(GLOB OFB_TESTS tests/OFB*.cpp)
+FILE(GLOB CFB_TESTS tests/CFB*.cpp)
 
-ADD_EXECUTABLE(rijntest
-    catch.hpp
-    testmain.cpp
-    ${TESTS}
-)
-TARGET_INCLUDE_DIRECTORIES(rijntest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-TARGET_LINK_LIBRARIES(rijntest rijndael)
+ADD_EXECUTABLE(ecbtest catch.hpp testmain.cpp ${ECB_TESTS})
+ADD_EXECUTABLE(cbctest catch.hpp testmain.cpp ${CBC_TESTS})
+ADD_EXECUTABLE(ofbtest catch.hpp testmain.cpp ${OFB_TESTS})
+ADD_EXECUTABLE(cfbtest catch.hpp testmain.cpp ${CFB_TESTS})
+
+TARGET_LINK_LIBRARIES(ecbtest rijndael)
+TARGET_LINK_LIBRARIES(cbctest rijndael)
+TARGET_LINK_LIBRARIES(ofbtest rijndael)
+TARGET_LINK_LIBRARIES(cfbtest rijndael)
 
 ADD_CUSTOM_TARGET(gentests
     DEPENDS gentests.py KAT_AES.zip
