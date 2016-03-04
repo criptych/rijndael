@@ -195,9 +195,6 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
 
     size_t key_cols = (num_rounds + 1) * block_size;
 
-    /* allocate space for expanded key */
-    state->key = malloc(2 * key_cols * sizeof *state->key);
-
     if (!state->key) return 0;
 
     size_t i, j, k;
@@ -227,14 +224,6 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
         state->key[k] = n;
     }
 
-    for (i = 0; i <= num_rounds; ++i) {
-        for (j = 0; j < block_size; ++j) {
-            state->key[key_cols+i*block_size+j] = state->key[(num_rounds - i)*block_size+j];
-        }
-    }
-
-    rijndael_rmixcolumns(&(state->key[key_cols+block_size]), key_cols-2*block_size);
-
     TRACE("k (after last round) == %u", k);
 
     return 1;
@@ -249,7 +238,7 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
     indata = (uint8_t*)plaintext;
     outdata = (uint8_t*)ciphertext;
 
-    uint32_t block[8]; /* max size */
+    uint32_t *block = state->block;
 
     for (i = 0; i < size; i += 4 * state->block_size) {
         PRINT("Round 0");
@@ -321,7 +310,7 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
     indata = (uint8_t*)ciphertext;
     outdata = (uint8_t*)plaintext;
 
-    uint32_t block[8]; /* max size */
+    uint32_t *block = state->block;
 
     for (i = 0; i < size; i += 4 * state->block_size) {
         PRINT("Round 0");
@@ -388,10 +377,6 @@ void rijndael_finish(rijndael_state *state) {
     state->key_size = 0;
     state->block_size = 0;
     state->num_rounds = 0;
-    if (state->key) {
-        free(state->key);
-        state->key = NULL;
-    }
 }
 
 

@@ -8,10 +8,11 @@ extern "C" {
 #endif
 
 typedef struct rijndael_state {
-    size_t key_size;
-    size_t block_size;
-    size_t num_rounds;
-    uint32_t *key;
+    uint32_t key[120];
+    uint32_t block[8];
+    uint8_t key_size;
+    uint8_t block_size;
+    uint8_t num_rounds;
 } rijndael_state, aes_state;
 
 /* general Rijndael algorithm */
