@@ -55,9 +55,19 @@ ADD_LIBRARY(rijndael
     rijndael.c
 )
 
+FILE(GLOB TESTS tests/*.cpp)
+
 ADD_EXECUTABLE(rijntest
     catch.hpp
     testmain.cpp
-    rijntest.cpp
+    ${TESTS}
 )
+TARGET_INCLUDE_DIRECTORIES(rijntest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 TARGET_LINK_LIBRARIES(rijntest rijndael)
+
+ADD_CUSTOM_TARGET(gentests
+    DEPENDS gentests.py KAT_AES.zip
+    COMMAND python gentests.py
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
