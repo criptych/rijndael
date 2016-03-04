@@ -28,9 +28,6 @@ ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "/Za")            # Disable language extension
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "/Zi")            # Generate debugging information (PDB)
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "/arch:SSE")      # Enable SSE opcodes
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "/arch:SSE2")     # Enable SSE2 opcodes
-ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS_RELEASE "/O2")    # Enable optimization
-ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS_RELWITHDEBINFO "/O2") # Enable optimization
-ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS_MINSIZEREL "/Os") # Optimize size
 
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "/Wall")          # Enable all warnings
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "/WX")            # Treat warnings as errors
@@ -38,9 +35,6 @@ ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "/Za")            # Disable language exten
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "/Zi")            # Generate debugging information (PDB)
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "/arch:SSE")      # Enable SSE opcodes
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "/arch:SSE2")     # Enable SSE2 opcodes
-ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS_RELEASE "/O2")    # Enable optimization
-ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/O2") # Enable optimization
-ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS_MINSIZEREL "/Os") # Optimize size
 
 # GCC/Clang options
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Wall")          # Enable all (actually most) warnings
@@ -48,31 +42,23 @@ ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Weverything")   # (Clang) Enable ALL warning
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Wextra")        # (GCC) Enable more (all?) warnings
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Wpedantic")     # (GCC) Disable language extensions
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Werror")        # Treat warnings as errors
-ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Wno-error=pedantic")     # (GCC) Disable language extensions
+ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Wno-error=pedantic") # ... except pedantic warnings
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-std=c99")       # Enable C99
-ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-g")             # Generate debugging information
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-msse")          # Enable SSE opcodes
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-msse2")         # Enable SSE2 opcodes
-ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS_RELEASE "-O2")    # Enable optimization
-ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS_RELWITHDEBINFO "-O2") # Enable optimization
-ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS_MINSIZEREL "-Os") # Optimize size
 
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Wall")          # Enable all (actually most) warnings
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Weverything")   # (Clang) Enable ALL warnings
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Wextra")        # (GCC) Enable more (all?) warnings
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Wpedantic")     # (GCC) Disable language extensions
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Werror")        # Treat warnings as errors
-ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Wno-error=pedantic")     # (GCC) Disable language extensions
+ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Wno-error=pedantic") # ... except pedantic warnings
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-std=c++0x")     # Enable C++11 (older GCC versions)
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-std=c++11")     # Enable C++11
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-std=c++14")     # Enable C++14 (if available)
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-std=c++17")     # Enable C++17 (if available)
-ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-g")             # Generate debugging information
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-msse")          # Enable SSE opcodes
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-msse2")         # Enable SSE2 opcodes
-ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS_RELEASE "-O2")    # Enable optimization
-ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2") # Enable optimization
-ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS_MINSIZEREL "-Os") # Optimize size
 
 ADD_LIBRARY(rijndael
     rijndael.h
