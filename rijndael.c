@@ -334,7 +334,7 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
         PRINT_BLOCK(block, state->block_size*4, "    Input Block:");
 
         rijndael_addroundkey(block, state->block_size, key);
-        k -= state->block_size;
+        key -= state->block_size;
         PRINT_BLOCK(block, state->block_size*4, "    AddRoundKey:");
 
         rijndael_rshiftrows(block, state->block_size);
@@ -347,7 +347,7 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
             PRINT("Round %d", r);
 
             rijndael_addroundkey(block, state->block_size, key);
-            k -= state->block_size;
+            key -= state->block_size;
             PRINT_BLOCK(block, state->block_size*4, "    AddRoundKey:");
 
             rijndael_rmixcolumns(block, state->block_size);
