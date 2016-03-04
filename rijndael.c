@@ -110,7 +110,7 @@ static void rijndael_subbytes(void *block, size_t block_size, const uint8_t *sbo
 
 static void rijndael_shiftrows(void *block, size_t block_size) {
     uint8_t *bytes = (uint8_t*)block;
-    size_t i, j, k, n[4] = { 0, 1, 2, 3 };
+    size_t i, j, n[4] = { 0, 1, 2, 3 };
 
     if (block_size > 7) {
         n[2] = 3;
@@ -132,7 +132,7 @@ static void rijndael_shiftrows(void *block, size_t block_size) {
 
 static void rijndael_rshiftrows(void *block, size_t block_size) {
     uint8_t *bytes = (uint8_t*)block;
-    size_t i, j, k, n[4] = { 0, 1, 2, 3 };
+    size_t i, j, n[4] = { 0, 1, 2, 3 };
 
     if (block_size > 7) {
         n[2] = 3;
@@ -242,7 +242,7 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
 
 size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
     uint8_t *indata, *outdata;
-    size_t i, j, k, r;
+    size_t i, j, r;
 
     size_t n;
 
@@ -255,6 +255,8 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
         PRINT("Round 0");
 
         uint32_t *key = state->key;
+
+        TRACE("k == %d", key - state->key);
 
         for (j = 0; j < state->block_size; ++j) {
             block[j]  = indata[i + j * 4 + 0] <<  0;
@@ -288,6 +290,8 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
 
         PRINT("Final Round");
 
+        TRACE("k == %d", key - state->key);
+
         rijndael_subbytes(block, state->block_size, fsbox);
         PRINT_BLOCK(block, state->block_size*4, "    SubBytes:   ");
 
@@ -310,7 +314,7 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
 
 size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *plaintext, size_t size) {
     uint8_t *indata, *outdata;
-    size_t i, j, k, r;
+    size_t i, j, r;
 
     size_t n;
 
@@ -323,6 +327,8 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
         PRINT("Round 0");
 
         uint32_t *key = state->key + state->block_size * state->num_rounds;
+
+        TRACE("k == %d", key - state->key);
 
         for (j = 0; j < state->block_size; ++j) {
             block[j]  = indata[i + j * 4 + 0] <<  0;
@@ -362,7 +368,7 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
 
         PRINT("Final Round");
 
-        TRACE("k == %u", k);
+        TRACE("k == %d", key - state->key);
 
         rijndael_addroundkey(block, state->block_size, key);
         PRINT_BLOCK(block, state->block_size*4, "    AddRoundKey:");
