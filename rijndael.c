@@ -29,8 +29,6 @@
 # define PRINT_BLOCK(...)
 #endif
 
-#define SHOW_ROUNDS
-
 static uint8_t fsbox[256]; /* forward S-box */
 static uint8_t rsbox[256]; /* reverse S-box */
 static uint8_t rcon[256];
@@ -192,12 +190,6 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
     if (!state->key) return 0;
 
     size_t i, j, k;
-
-/*
-    TRACE("key_size == %u", key_size);
-    TRACE("block_size == %u", block_size);
-    TRACE("num_rounds == %u", num_rounds);
-*/
 
     state->key_size = key_size;
     state->block_size = block_size;
