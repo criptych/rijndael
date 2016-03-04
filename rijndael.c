@@ -32,6 +32,7 @@
 static uint8_t fsbox[256]; /* forward S-box */
 static uint8_t rsbox[256]; /* reverse S-box */
 static uint8_t rcon[256];
+static uint8_t g2[256], g3[256], g9[256], g11[256], g13[256], g14[256];
 
 static uint8_t galois(uint8_t a, uint8_t b) {
     uint8_t n = 0;
@@ -75,6 +76,16 @@ static void rijndael_init_tables() {
         for (size_t i = 0; i < 256; ++i) {
             rcon[i] = r;
             r = (r << 1) ^ ((r >> 7) * 0x1b);
+        }
+
+        TRACE("Initialize `galois' tables");
+        for (size_t i = 0; i < 256; ++i) {
+            g2 [i] = galois(i,  2);
+            g3 [i] = galois(i,  3);
+            g9 [i] = galois(i,  9);
+            g11[i] = galois(i, 11);
+            g13[i] = galois(i, 13);
+            g14[i] = galois(i, 14);
         }
 
         initialized = 1;
@@ -147,10 +158,10 @@ static void rijndael_mixcolumns(void *block, size_t block_size) {
 
     for (i = 0; i < block_size; ++i) {
         uint8_t a[4] = { bytes[4*i+0], bytes[4*i+1], bytes[4*i+2], bytes[4*i+3] };
-        bytes[4*i+0] = galois(a[0], 2) ^ galois(a[1], 3) ^ a[2] ^ a[3];
-        bytes[4*i+1] = galois(a[1], 2) ^ galois(a[2], 3) ^ a[3] ^ a[0];
-        bytes[4*i+2] = galois(a[2], 2) ^ galois(a[3], 3) ^ a[0] ^ a[1];
-        bytes[4*i+3] = galois(a[3], 2) ^ galois(a[0], 3) ^ a[1] ^ a[2];
+        bytes[4*i+0] = g2[a[0]] ^ g3[a[1]] ^ a[2] ^ a[3];
+        bytes[4*i+1] = g2[a[1]] ^ g3[a[2]] ^ a[3] ^ a[0];
+        bytes[4*i+2] = g2[a[2]] ^ g3[a[3]] ^ a[0] ^ a[1];
+        bytes[4*i+3] = g2[a[3]] ^ g3[a[0]] ^ a[1] ^ a[2];
     }
 }
 
@@ -160,10 +171,10 @@ static void rijndael_rmixcolumns(void *block, size_t block_size) {
 
     for (i = 0; i < block_size; ++i) {
         uint8_t a[4] = { bytes[4*i+0], bytes[4*i+1], bytes[4*i+2], bytes[4*i+3] };
-        bytes[4*i+0] = galois(a[0], 14) ^ galois(a[1], 11) ^ galois(a[2], 13) ^ galois(a[3], 9);
-        bytes[4*i+1] = galois(a[1], 14) ^ galois(a[2], 11) ^ galois(a[3], 13) ^ galois(a[0], 9);
-        bytes[4*i+2] = galois(a[2], 14) ^ galois(a[3], 11) ^ galois(a[0], 13) ^ galois(a[1], 9);
-        bytes[4*i+3] = galois(a[3], 14) ^ galois(a[0], 11) ^ galois(a[1], 13) ^ galois(a[2], 9);
+        bytes[4*i+0] = g14[a[0]] ^ g11[a[1]] ^ g13[a[2]] ^ g9[a[3]];
+        bytes[4*i+1] = g14[a[1]] ^ g11[a[2]] ^ g13[a[3]] ^ g9[a[0]];
+        bytes[4*i+2] = g14[a[2]] ^ g11[a[3]] ^ g13[a[0]] ^ g9[a[1]];
+        bytes[4*i+3] = g14[a[3]] ^ g11[a[0]] ^ g13[a[1]] ^ g9[a[2]];
     }
 }
 
