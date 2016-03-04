@@ -173,9 +173,9 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
     if (key_size < 128 || key_size > 256) return 0;
     if (block_size < 128 || block_size > 256) return 0;
 
-    /* convert number of bits to number of (32-bit) words, rounding up */
-    key_size = (key_size + 31) >> 5;
-    block_size = (block_size + 31) >> 5;
+    /* convert number of bits to number of (32-bit) words, rounding down */
+    key_size = key_size >> 5;
+    block_size = block_size >> 5;
 
     if (num_rounds == 0) {
         num_rounds  = (key_size > block_size) ? key_size : block_size;
