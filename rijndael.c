@@ -327,10 +327,10 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
         PRINT_BLOCK(block, state->block_size*4, "    AddRoundKey:");
 
         rijndael_rshiftrows(block, state->block_size);
-        PRINT_BLOCK(block, state->block_size*4, "    ShiftRows:  ");
+        PRINT_BLOCK(block, state->block_size*4, "    RShiftRows: ");
 
         rijndael_subbytes(block, state->block_size, rsbox);
-        PRINT_BLOCK(block, state->block_size*4, "    SubBytes:   ");
+        PRINT_BLOCK(block, state->block_size*4, "    RSubBytes:  ");
 
         for (r = 1; r < state->num_rounds; ++r) {
             PRINT("Round %d", r);
@@ -340,13 +340,13 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
             PRINT_BLOCK(block, state->block_size*4, "    AddRoundKey:");
 
             rijndael_rmixcolumns(block, state->block_size);
-            PRINT_BLOCK(block, state->block_size*4, "    MixColumns: ");
+            PRINT_BLOCK(block, state->block_size*4, "    RMixColumns:");
 
             rijndael_rshiftrows(block, state->block_size);
-            PRINT_BLOCK(block, state->block_size*4, "    ShiftRows:  ");
+            PRINT_BLOCK(block, state->block_size*4, "    RShiftRows: ");
 
             rijndael_subbytes(block, state->block_size, rsbox);
-            PRINT_BLOCK(block, state->block_size*4, "    SubBytes:   ");
+            PRINT_BLOCK(block, state->block_size*4, "    RSubBytes:  ");
         }
 
         PRINT("Final Round");
