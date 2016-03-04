@@ -68,11 +68,13 @@ FILE(GLOB CBC_TESTS tests/CBC*.cpp)
 FILE(GLOB OFB_TESTS tests/OFB*.cpp)
 FILE(GLOB CFB_TESTS tests/CFB*.cpp)
 
+ADD_EXECUTABLE(selftest catch.hpp testmain.cpp selftest.cpp)
 ADD_EXECUTABLE(ecbtest catch.hpp testmain.cpp ${ECB_TESTS})
 ADD_EXECUTABLE(cbctest catch.hpp testmain.cpp ${CBC_TESTS})
 ADD_EXECUTABLE(ofbtest catch.hpp testmain.cpp ${OFB_TESTS})
 ADD_EXECUTABLE(cfbtest catch.hpp testmain.cpp ${CFB_TESTS})
 
+TARGET_LINK_LIBRARIES(selftest rijndael)
 TARGET_LINK_LIBRARIES(ecbtest rijndael)
 TARGET_LINK_LIBRARIES(cbctest rijndael)
 TARGET_LINK_LIBRARIES(ofbtest rijndael)
