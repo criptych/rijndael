@@ -196,8 +196,8 @@ int rijndael_self_test(void) {
     rijndael_init_tables();
 
     memcpy(test128, block128, sizeof test128);
-    rijndael_addroundkey(test128, sizeof test128, key128);
-    rijndael_addroundkey(test128, sizeof test128, key128);
+    rijndael_addroundkey(test128, sizeof test128/4, key128);
+    rijndael_addroundkey(test128, sizeof test128/4, key128);
     if (test128[0] != block128[0] || test128[1] != block128[1] ||
         test128[2] != block128[2] || test128[3] != block128[3]
     ) {
@@ -209,8 +209,8 @@ int rijndael_self_test(void) {
     }
 
     memcpy(test192, block192, sizeof test192);
-    rijndael_addroundkey(test192, sizeof test192, key192);
-    rijndael_addroundkey(test192, sizeof test192, key192);
+    rijndael_addroundkey(test192, sizeof test192/4, key192);
+    rijndael_addroundkey(test192, sizeof test192/4, key192);
     if (test192[0] != block192[0] || test192[1] != block192[1] ||
         test192[2] != block192[2] || test192[3] != block192[3] ||
         test192[4] != block192[4] || test192[5] != block192[5]
@@ -223,8 +223,8 @@ int rijndael_self_test(void) {
     }
 
     memcpy(test256, block256, sizeof test256);
-    rijndael_addroundkey(test256, sizeof test256, key256);
-    rijndael_addroundkey(test256, sizeof test256, key256);
+    rijndael_addroundkey(test256, sizeof test256/4, key256);
+    rijndael_addroundkey(test256, sizeof test256/4, key256);
     if (test256[0] != block256[0] || test256[1] != block256[1] ||
         test256[2] != block256[2] || test256[3] != block256[3] ||
         test256[4] != block256[4] || test256[5] != block256[5] ||
@@ -238,8 +238,8 @@ int rijndael_self_test(void) {
     }
 
     memcpy(test128, block128, sizeof test128);
-    rijndael_subbytes(test128, sizeof test128, fsbox);
-    rijndael_subbytes(test128, sizeof test128, rsbox);
+    rijndael_subbytes(test128, sizeof test128/4, fsbox);
+    rijndael_subbytes(test128, sizeof test128/4, rsbox);
     if (test128[0] != block128[0] || test128[1] != block128[1] ||
         test128[2] != block128[2] || test128[3] != block128[3]
     ) {
@@ -251,8 +251,8 @@ int rijndael_self_test(void) {
     }
 
     memcpy(test192, block192, sizeof test192);
-    rijndael_subbytes(test192, sizeof test192, fsbox);
-    rijndael_subbytes(test192, sizeof test192, rsbox);
+    rijndael_subbytes(test192, sizeof test192/4, fsbox);
+    rijndael_subbytes(test192, sizeof test192/4, rsbox);
     if (test192[0] != block192[0] || test192[1] != block192[1] ||
         test192[2] != block192[2] || test192[3] != block192[3] ||
         test192[4] != block192[4] || test192[5] != block192[5]
@@ -265,8 +265,8 @@ int rijndael_self_test(void) {
     }
 
     memcpy(test256, block256, sizeof test256);
-    rijndael_subbytes(test256, sizeof test256, fsbox);
-    rijndael_subbytes(test256, sizeof test256, rsbox);
+    rijndael_subbytes(test256, sizeof test256/4, fsbox);
+    rijndael_subbytes(test256, sizeof test256/4, rsbox);
     if (test256[0] != block256[0] || test256[1] != block256[1] ||
         test256[2] != block256[2] || test256[3] != block256[3] ||
         test256[4] != block256[4] || test256[5] != block256[5] ||
@@ -280,8 +280,8 @@ int rijndael_self_test(void) {
     }
 
     memcpy(test128, block128, sizeof test128);
-    rijndael_mixcolumns(test128, sizeof test128);
-    rijndael_rmixcolumns(test128, sizeof test128);
+    rijndael_mixcolumns(test128, sizeof test128/4);
+    rijndael_rmixcolumns(test128, sizeof test128/4);
     if (test128[0] != block128[0] || test128[1] != block128[1] ||
         test128[2] != block128[2] || test128[3] != block128[3]
     ) {
@@ -293,8 +293,8 @@ int rijndael_self_test(void) {
     }
 
     memcpy(test192, block192, sizeof test192);
-    rijndael_mixcolumns(test192, sizeof test192);
-    rijndael_rmixcolumns(test192, sizeof test192);
+    rijndael_mixcolumns(test192, sizeof test192/4);
+    rijndael_rmixcolumns(test192, sizeof test192/4);
     if (test192[0] != block192[0] || test192[1] != block192[1] ||
         test192[2] != block192[2] || test192[3] != block192[3] ||
         test192[4] != block192[4] || test192[5] != block192[5]
@@ -307,8 +307,8 @@ int rijndael_self_test(void) {
     }
 
     memcpy(test256, block256, sizeof test256);
-    rijndael_mixcolumns(test256, sizeof test256);
-    rijndael_rmixcolumns(test256, sizeof test256);
+    rijndael_mixcolumns(test256, sizeof test256/4);
+    rijndael_rmixcolumns(test256, sizeof test256/4);
     if (test256[0] != block256[0] || test256[1] != block256[1] ||
         test256[2] != block256[2] || test256[3] != block256[3] ||
         test256[4] != block256[4] || test256[5] != block256[5] ||
@@ -322,8 +322,8 @@ int rijndael_self_test(void) {
     }
 
     memcpy(test128, block128, sizeof test128);
-    rijndael_shiftrows(test128, sizeof test128);
-    rijndael_rshiftrows(test128, sizeof test128);
+    rijndael_shiftrows(test128, sizeof test128/4);
+    rijndael_rshiftrows(test128, sizeof test128/4);
     if (test128[0] != block128[0] || test128[1] != block128[1] ||
         test128[2] != block128[2] || test128[3] != block128[3]
     ) {
@@ -335,8 +335,8 @@ int rijndael_self_test(void) {
     }
 
     memcpy(test192, block192, sizeof test192);
-    rijndael_shiftrows(test192, sizeof test192);
-    rijndael_rshiftrows(test192, sizeof test192);
+    rijndael_shiftrows(test192, sizeof test192/4);
+    rijndael_rshiftrows(test192, sizeof test192/4);
     if (test192[0] != block192[0] || test192[1] != block192[1] ||
         test192[2] != block192[2] || test192[3] != block192[3] ||
         test192[4] != block192[4] || test192[5] != block192[5]
@@ -349,8 +349,8 @@ int rijndael_self_test(void) {
     }
 
     memcpy(test256, block256, sizeof test256);
-    rijndael_shiftrows(test256, sizeof test256);
-    rijndael_rshiftrows(test256, sizeof test256);
+    rijndael_shiftrows(test256, sizeof test256/4);
+    rijndael_rshiftrows(test256, sizeof test256/4);
     if (test256[0] != block256[0] || test256[1] != block256[1] ||
         test256[2] != block256[2] || test256[3] != block256[3] ||
         test256[4] != block256[4] || test256[5] != block256[5] ||
