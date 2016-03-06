@@ -1,5 +1,6 @@
 #include "rijndael.h"
 #include "catch.hpp"
+#include <cstring>
 
 extern "C" void rijndael_init_tables(void);
 extern "C" void rijndael_addroundkey(void *block, size_t block_size, const void *key);
