@@ -119,41 +119,44 @@ void rijndael_rsubbytes(void *block, size_t block_size) {
 void rijndael_shiftrows(void *block, size_t block_size) {
     uint8_t *bytes = (uint8_t*)block;
     size_t i, j, k, n[4] = { 0, 1, 2, 3 };
+    uint8_t c[4];
 
-    if (block_size > 7) {
-        n[2] = 3;
-    }
-    if (block_size > 6) {
-        n[3] = 4;
-    }
+    if (block_size > 7) n[2] = 3;
+    if (block_size > 6) n[3] = 4;
 
     for (i = 1; i < 4; ++i) {
         k = block_size - n[i];
-        uint8_t c[4];
-        for (j = 0; j < n[i]; ++j) c[j] = bytes[j * 4 + i];
-        for (; j < block_size; ++j) bytes[(j - n[i]) * 4 + i] = bytes[j * 4 + i];
-        for (j = k; j < block_size; ++j) bytes[j * 4 + i] = c[j - k];
-
+        for (j = 0; j < n[i]; ++j) {
+            c[j] = bytes[j * 4 + i];
+        }
+        for (; j < block_size; ++j) {
+            bytes[(j - n[i]) * 4 + i] = bytes[j * 4 + i];
+        }
+        for (j = k; j < block_size; ++j) {
+            bytes[j * 4 + i] = c[j - k];
+        }
     }
 }
 
 void rijndael_rshiftrows(void *block, size_t block_size) {
     uint8_t *bytes = (uint8_t*)block;
     size_t i, j, k, n[4] = { 0, 1, 2, 3 };
+    uint8_t c[4];
 
-    if (block_size > 7) {
-        n[2] = 3;
-    }
-    if (block_size > 6) {
-        n[3] = 4;
-    }
+    if (block_size > 7) n[2] = 3;
+    if (block_size > 6) n[3] = 4;
 
     for (i = 1; i < 4; ++i) {
         k = block_size - n[i];
-        uint8_t c[4];
-        for (j = k; j < block_size; ++j) c[j - k] = bytes[j * 4 + i];
-        for (j = 0; j < k; ++j) bytes[(block_size - j - 1) * 4 + i] = bytes[(block_size - j - 1 - n[i]) * 4 + i];
-        for (j = 0; j < n[i]; ++j) bytes[j * 4 + i] = c[j];
+        for (j = k; j < block_size; ++j) {
+            c[j - k] = bytes[j * 4 + i];
+        }
+        for (j = 0; j < k; ++j) {
+            bytes[(block_size - j - 1) * 4 + i] = bytes[(block_size - j - 1 - n[i]) * 4 + i];
+        }
+        for (j = 0; j < n[i]; ++j) {
+            bytes[j * 4 + i] = c[j];
+        }
     }
 }
 
@@ -194,8 +197,7 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
     block_size = block_size >> 5;
 
     if (num_rounds == 0) {
-        num_rounds  = (key_size > block_size) ? key_size : block_size;
-        num_rounds += 6;
+        num_rounds = ((key_size > block_size) ? key_size : block_size) + 6;
     }
 
     size_t key_cols = (num_rounds + 1) * block_size;
@@ -211,7 +213,10 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
     PRINT_BLOCK(key, key_size*4, "Input Key:      ");
 
     for (k = 0; k < key_size; ++k) {
-        state->key[k] = key[k*4+0] | (key[k*4+1]<<8) | (key[k*4+2]<<16) | (key[k*4+3]<<24);
+        state->key[k]  = key[k * 4 + 0] <<  0;
+        state->key[k] |= key[k * 4 + 1] <<  8;
+        state->key[k] |= key[k * 4 + 2] << 16;
+        state->key[k] |= key[k * 4 + 3] << 24;
     }
 
     TRACE("k (after first round) == %u", k);
@@ -237,8 +242,6 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
 size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
     uint8_t *indata, *outdata;
     size_t i, j, r;
-
-    size_t n;
 
     indata = (uint8_t*)plaintext;
     outdata = (uint8_t*)ciphertext;
@@ -309,8 +312,6 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
 size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *plaintext, size_t size) {
     uint8_t *indata, *outdata;
     size_t i, j, r;
-
-    size_t n;
 
     indata = (uint8_t*)ciphertext;
     outdata = (uint8_t*)plaintext;
@@ -383,7 +384,6 @@ void rijndael_finish(rijndael_state *state) {
     state->block_size = 0;
     state->num_rounds = 0;
 }
-
 
 /* wrappers for above specifically for AES usage */
 
