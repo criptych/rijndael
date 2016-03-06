@@ -118,7 +118,7 @@ void rijndael_rsubbytes(void *block, size_t block_size) {
 
 void rijndael_shiftrows(void *block, size_t block_size) {
     uint8_t *bytes = (uint8_t*)block;
-    size_t i, j, n[4] = { 0, 1, 2, 3 };
+    size_t i, j, k, n[4] = { 0, 1, 2, 3 };
 
     if (block_size > 7) {
         n[2] = 3;
@@ -127,20 +127,19 @@ void rijndael_shiftrows(void *block, size_t block_size) {
         n[3] = 4;
     }
 
-    for (i = 0; i < 4; ++i) {
-        uint8_t c[4] = { bytes[i], bytes[4+i], bytes[8+i], bytes[12+i] };
-        for (j = 0; j < block_size - n[i]; ++j) {
-            bytes[j * 4 + i] = bytes[((j + n[i]) % block_size) * 4 + i];
-        }
-        for (; j < block_size; ++j) {
-            bytes[j * 4 + i] = c[(j + n[i]) % 4];
-        }
+    for (i = 1; i < 4; ++i) {
+        k = block_size - n[i];
+        uint8_t c[4];
+        for (j = 0; j < n[i]; ++j) c[j] = bytes[j * 4 + i];
+        for (; j < block_size; ++j) bytes[(j - n[i]) * 4 + i] = bytes[j * 4 + i];
+        for (j = k; j < block_size; ++j) bytes[j * 4 + i] = c[j - k];
+
     }
 }
 
 void rijndael_rshiftrows(void *block, size_t block_size) {
     uint8_t *bytes = (uint8_t*)block;
-    size_t i, j, n[4] = { 0, 1, 2, 3 };
+    size_t i, j, k, n[4] = { 0, 1, 2, 3 };
 
     if (block_size > 7) {
         n[2] = 3;
@@ -149,14 +148,12 @@ void rijndael_rshiftrows(void *block, size_t block_size) {
         n[3] = 4;
     }
 
-    for (i = 0; i < 4; ++i) {
-        uint8_t c[4] = { bytes[i], bytes[4+i], bytes[8+i], bytes[12+i] };
-        for (j = 0; j < block_size - n[i]; ++j) {
-            bytes[j * 4 + i] = bytes[((j + block_size - n[i]) % block_size) * 4 + i];
-        }
-        for (; j < block_size; ++j) {
-            bytes[j * 4 + i] = c[(j + block_size - n[i]) % 4];
-        }
+    for (i = 1; i < 4; ++i) {
+        k = block_size - n[i];
+        uint8_t c[4];
+        for (j = k; j < block_size; ++j) c[j - k] = bytes[j * 4 + i];
+        for (j = 0; j < k; ++j) bytes[(block_size - j - 1) * 4 + i] = bytes[(block_size - j - 1 - n[i]) * 4 + i];
+        for (j = 0; j < n[i]; ++j) bytes[j * 4 + i] = c[j];
     }
 }
 
