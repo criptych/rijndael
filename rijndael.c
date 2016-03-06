@@ -44,7 +44,7 @@ static uint8_t galois(uint8_t a, uint8_t b) {
     return n;
 }
 
-static void rijndael_init_tables(void) {
+void rijndael_init_tables(void) {
     static int initialized = 0;
 
     if (!initialized) {
@@ -92,7 +92,7 @@ static void rijndael_init_tables(void) {
     }
 }
 
-static void rijndael_addroundkey(void *block, size_t block_size, const void *key) {
+void rijndael_addroundkey(void *block, size_t block_size, const void *key) {
     uint32_t *b = block;
     const uint32_t *k = key;
     for (size_t i = 0; i < block_size; ++i) {
@@ -100,15 +100,23 @@ static void rijndael_addroundkey(void *block, size_t block_size, const void *key
     }
 }
 
-static void rijndael_subbytes(void *block, size_t block_size, const uint8_t *sbox) {
+void rijndael_subbytes(void *block, size_t block_size) {
     uint8_t *bytes = (uint8_t*)block;
     size_t count = block_size * 4, i;
     for (i = 0; i < count; ++i) {
-        bytes[i] = sbox[bytes[i]];
+        bytes[i] = fsbox[bytes[i]];
     }
 }
 
-static void rijndael_shiftrows(void *block, size_t block_size) {
+void rijndael_rsubbytes(void *block, size_t block_size) {
+    uint8_t *bytes = (uint8_t*)block;
+    size_t count = block_size * 4, i;
+    for (i = 0; i < count; ++i) {
+        bytes[i] = rsbox[bytes[i]];
+    }
+}
+
+void rijndael_shiftrows(void *block, size_t block_size) {
     uint8_t *bytes = (uint8_t*)block;
     size_t i, j, n[4] = { 0, 1, 2, 3 };
 
@@ -130,7 +138,7 @@ static void rijndael_shiftrows(void *block, size_t block_size) {
     }
 }
 
-static void rijndael_rshiftrows(void *block, size_t block_size) {
+void rijndael_rshiftrows(void *block, size_t block_size) {
     uint8_t *bytes = (uint8_t*)block;
     size_t i, j, n[4] = { 0, 1, 2, 3 };
 
@@ -152,7 +160,7 @@ static void rijndael_rshiftrows(void *block, size_t block_size) {
     }
 }
 
-static void rijndael_mixcolumns(void *block, size_t block_size) {
+void rijndael_mixcolumns(void *block, size_t block_size) {
     uint8_t *bytes = (uint8_t*)block;
     size_t i;
 
@@ -165,7 +173,7 @@ static void rijndael_mixcolumns(void *block, size_t block_size) {
     }
 }
 
-static void rijndael_rmixcolumns(void *block, size_t block_size) {
+void rijndael_rmixcolumns(void *block, size_t block_size) {
     uint8_t *bytes = (uint8_t*)block;
     size_t i;
 
@@ -176,200 +184,6 @@ static void rijndael_rmixcolumns(void *block, size_t block_size) {
         bytes[4*i+2] = g14[a[2]] ^ g11[a[3]] ^ g13[a[0]] ^ g9[a[1]];
         bytes[4*i+3] = g14[a[3]] ^ g11[a[0]] ^ g13[a[1]] ^ g9[a[2]];
     }
-}
-
-int rijndael_self_test(void) {
-    static const uint32_t key128[4] = { 0x01234567, 0x89abcdef, 0x01234567, 0x89abcdef };
-    static const uint32_t key192[6] = { 0x01234567, 0x89abcdef, 0x02468ace, 0x13579bdf, 0x048c159d, 0x26ae37bf };
-    static const uint32_t key256[8] = { 0x01010101, 0x30303030, 0x5a5a5a5a, 0xa5a5a5a5, 0x96969696, 0xfbfbfbfb };
-
-    static const uint32_t block128[4] = { 0x11111111, 0x33333333, 0x77777777, 0xffffffff };
-    static const uint32_t block192[6] = { 0x11111111, 0x33333333, 0x55555555, 0x77777777, 0xaaaaaaaa, 0xffffffff };
-    static const uint32_t block256[8] = { 0x11111111, 0x33333333, 0x55555555, 0x77777777, 0x99999999, 0xbbbbbbbb, 0xdddddddd, 0xffffffff };
-
-    uint32_t test128[4], test192[6], test256[8];
-
-    size_t failed = 0;
-
-    fputs("RIJNDAEL SELF-CHECK\n", stderr);
-
-    rijndael_init_tables();
-
-    memcpy(test128, block128, sizeof test128);
-    rijndael_addroundkey(test128, sizeof test128/4, key128);
-    rijndael_addroundkey(test128, sizeof test128/4, key128);
-    if (test128[0] != block128[0] || test128[1] != block128[1] ||
-        test128[2] != block128[2] || test128[3] != block128[3]
-    ) {
-        ++failed;
-        fputs("AddRoundKey failed (128)\n", stderr);
-        for (size_t i = 0; i < 4; ++i) {
-            fprintf(stderr, "Expected: 0x%08x, got: 0x%08x\n", block128[i], test128[i]);
-        }
-    }
-
-    memcpy(test192, block192, sizeof test192);
-    rijndael_addroundkey(test192, sizeof test192/4, key192);
-    rijndael_addroundkey(test192, sizeof test192/4, key192);
-    if (test192[0] != block192[0] || test192[1] != block192[1] ||
-        test192[2] != block192[2] || test192[3] != block192[3] ||
-        test192[4] != block192[4] || test192[5] != block192[5]
-    ) {
-        ++failed;
-        fputs("AddRoundKey failed (192)\n", stderr);
-        for (size_t i = 0; i < 6; ++i) {
-            fprintf(stderr, "Expected: 0x%08x, got: 0x%08x\n", block192[i], test192[i]);
-        }
-    }
-
-    memcpy(test256, block256, sizeof test256);
-    rijndael_addroundkey(test256, sizeof test256/4, key256);
-    rijndael_addroundkey(test256, sizeof test256/4, key256);
-    if (test256[0] != block256[0] || test256[1] != block256[1] ||
-        test256[2] != block256[2] || test256[3] != block256[3] ||
-        test256[4] != block256[4] || test256[5] != block256[5] ||
-        test256[6] != block256[6] || test256[7] != block256[7]
-    ) {
-        ++failed;
-        fputs("AddRoundKey failed (256)\n", stderr);
-        for (size_t i = 0; i < 8; ++i) {
-            fprintf(stderr, "Expected: 0x%08x, got: 0x%08x\n", block256[i], test256[i]);
-        }
-    }
-
-    memcpy(test128, block128, sizeof test128);
-    rijndael_subbytes(test128, sizeof test128/4, fsbox);
-    rijndael_subbytes(test128, sizeof test128/4, rsbox);
-    if (test128[0] != block128[0] || test128[1] != block128[1] ||
-        test128[2] != block128[2] || test128[3] != block128[3]
-    ) {
-        ++failed;
-        fputs("SubBytes failed (128)\n", stderr);
-        for (size_t i = 0; i < 4; ++i) {
-            fprintf(stderr, "Expected: 0x%08x, got: 0x%08x\n", block128[i], test128[i]);
-        }
-    }
-
-    memcpy(test192, block192, sizeof test192);
-    rijndael_subbytes(test192, sizeof test192/4, fsbox);
-    rijndael_subbytes(test192, sizeof test192/4, rsbox);
-    if (test192[0] != block192[0] || test192[1] != block192[1] ||
-        test192[2] != block192[2] || test192[3] != block192[3] ||
-        test192[4] != block192[4] || test192[5] != block192[5]
-    ) {
-        ++failed;
-        fputs("SubBytes failed (192)\n", stderr);
-        for (size_t i = 0; i < 6; ++i) {
-            fprintf(stderr, "Expected: 0x%08x, got: 0x%08x\n", block192[i], test192[i]);
-        }
-    }
-
-    memcpy(test256, block256, sizeof test256);
-    rijndael_subbytes(test256, sizeof test256/4, fsbox);
-    rijndael_subbytes(test256, sizeof test256/4, rsbox);
-    if (test256[0] != block256[0] || test256[1] != block256[1] ||
-        test256[2] != block256[2] || test256[3] != block256[3] ||
-        test256[4] != block256[4] || test256[5] != block256[5] ||
-        test256[6] != block256[6] || test256[7] != block256[7]
-    ) {
-        ++failed;
-        fputs("SubBytes failed (256)\n", stderr);
-        for (size_t i = 0; i < 8; ++i) {
-            fprintf(stderr, "Expected: 0x%08x, got: 0x%08x\n", block256[i], test256[i]);
-        }
-    }
-
-    memcpy(test128, block128, sizeof test128);
-    rijndael_mixcolumns(test128, sizeof test128/4);
-    rijndael_rmixcolumns(test128, sizeof test128/4);
-    if (test128[0] != block128[0] || test128[1] != block128[1] ||
-        test128[2] != block128[2] || test128[3] != block128[3]
-    ) {
-        ++failed;
-        fputs("MixColumns failed (128)\n", stderr);
-        for (size_t i = 0; i < 4; ++i) {
-            fprintf(stderr, "Expected: 0x%08x, got: 0x%08x\n", block128[i], test128[i]);
-        }
-    }
-
-    memcpy(test192, block192, sizeof test192);
-    rijndael_mixcolumns(test192, sizeof test192/4);
-    rijndael_rmixcolumns(test192, sizeof test192/4);
-    if (test192[0] != block192[0] || test192[1] != block192[1] ||
-        test192[2] != block192[2] || test192[3] != block192[3] ||
-        test192[4] != block192[4] || test192[5] != block192[5]
-    ) {
-        ++failed;
-        fputs("MixColumns failed (192)\n", stderr);
-        for (size_t i = 0; i < 6; ++i) {
-            fprintf(stderr, "Expected: 0x%08x, got: 0x%08x\n", block192[i], test192[i]);
-        }
-    }
-
-    memcpy(test256, block256, sizeof test256);
-    rijndael_mixcolumns(test256, sizeof test256/4);
-    rijndael_rmixcolumns(test256, sizeof test256/4);
-    if (test256[0] != block256[0] || test256[1] != block256[1] ||
-        test256[2] != block256[2] || test256[3] != block256[3] ||
-        test256[4] != block256[4] || test256[5] != block256[5] ||
-        test256[6] != block256[6] || test256[7] != block256[7]
-    ) {
-        ++failed;
-        fputs("MixColumns failed (256)\n", stderr);
-        for (size_t i = 0; i < 8; ++i) {
-            fprintf(stderr, "Expected: 0x%08x, got: 0x%08x\n", block256[i], test256[i]);
-        }
-    }
-
-    memcpy(test128, block128, sizeof test128);
-    rijndael_shiftrows(test128, sizeof test128/4);
-    rijndael_rshiftrows(test128, sizeof test128/4);
-    if (test128[0] != block128[0] || test128[1] != block128[1] ||
-        test128[2] != block128[2] || test128[3] != block128[3]
-    ) {
-        ++failed;
-        fputs("ShiftRows failed (128)\n", stderr);
-        for (size_t i = 0; i < 4; ++i) {
-            fprintf(stderr, "Expected: 0x%08x, got: 0x%08x\n", block128[i], test128[i]);
-        }
-    }
-
-    memcpy(test192, block192, sizeof test192);
-    rijndael_shiftrows(test192, sizeof test192/4);
-    rijndael_rshiftrows(test192, sizeof test192/4);
-    if (test192[0] != block192[0] || test192[1] != block192[1] ||
-        test192[2] != block192[2] || test192[3] != block192[3] ||
-        test192[4] != block192[4] || test192[5] != block192[5]
-    ) {
-        ++failed;
-        fputs("ShiftRows failed (192)\n", stderr);
-        for (size_t i = 0; i < 6; ++i) {
-            fprintf(stderr, "Expected: 0x%08x, got: 0x%08x\n", block192[i], test192[i]);
-        }
-    }
-
-    memcpy(test256, block256, sizeof test256);
-    rijndael_shiftrows(test256, sizeof test256/4);
-    rijndael_rshiftrows(test256, sizeof test256/4);
-    if (test256[0] != block256[0] || test256[1] != block256[1] ||
-        test256[2] != block256[2] || test256[3] != block256[3] ||
-        test256[4] != block256[4] || test256[5] != block256[5] ||
-        test256[6] != block256[6] || test256[7] != block256[7]
-    ) {
-        ++failed;
-        fputs("ShiftRows failed (256)\n", stderr);
-        for (size_t i = 0; i < 8; ++i) {
-            fprintf(stderr, "Expected: 0x%08x, got: 0x%08x\n", block256[i], test256[i]);
-        }
-    }
-
-    if (failed == 0) {
-        fputs("SELF-CHECK PASSED.\n", stderr);
-    } else {
-        fputs("SELF-CHECK FAILED!\n", stderr);
-    }
-
-    return failed;
 }
 
 int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, size_t block_size, size_t num_rounds) {
@@ -409,10 +223,10 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
         uint32_t n = state->key[k - 1];
         if ((k % key_size) == 0) {
             n = (n >> 8) | (n << 24);
-            rijndael_subbytes(&n, 1, fsbox);
+            rijndael_subbytes(&n, 1);
             n ^= rcon[i++];
         } else if ((key_size > 6) && ((k % key_size) == 4)) {
-            rijndael_subbytes(&n, 1, fsbox);
+            rijndael_subbytes(&n, 1);
         }
         n ^= state->key[k - key_size];
         state->key[k] = n;
@@ -457,7 +271,7 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
         for (r = 1; r < state->num_rounds; ++r) {
             PRINT("Round %d", r);
 
-            rijndael_subbytes(block, state->block_size, fsbox);
+            rijndael_subbytes(block, state->block_size);
             PRINT_BLOCK(block, state->block_size*4, "    SubBytes:   ");
 
             rijndael_shiftrows(block, state->block_size);
@@ -475,7 +289,7 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
 
         TRACE("k == %d", key - state->key);
 
-        rijndael_subbytes(block, state->block_size, fsbox);
+        rijndael_subbytes(block, state->block_size);
         PRINT_BLOCK(block, state->block_size*4, "    SubBytes:   ");
 
         rijndael_shiftrows(block, state->block_size);
@@ -529,7 +343,7 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
         rijndael_rshiftrows(block, state->block_size);
         PRINT_BLOCK(block, state->block_size*4, "    RShiftRows: ");
 
-        rijndael_subbytes(block, state->block_size, rsbox);
+        rijndael_rsubbytes(block, state->block_size);
         PRINT_BLOCK(block, state->block_size*4, "    RSubBytes:  ");
 
         for (r = 1; r < state->num_rounds; ++r) {
@@ -545,7 +359,7 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
             rijndael_rshiftrows(block, state->block_size);
             PRINT_BLOCK(block, state->block_size*4, "    RShiftRows: ");
 
-            rijndael_subbytes(block, state->block_size, rsbox);
+            rijndael_rsubbytes(block, state->block_size);
             PRINT_BLOCK(block, state->block_size*4, "    RSubBytes:  ");
         }
 
