@@ -179,7 +179,7 @@ TEST_CASE("demo") {
     const uint8_t CIPHERTEXT[] = { 0x39,0x25,0x84,0x1d,0x02,0xdc,0x09,0xfb,0xdc,0x11,0x85,0x97,0x19,0x6a,0x0b,0x32 };
 
     uint8_t out[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 128));
+    REQUIRE(aes_init(&state, KEY, 128));
     REQUIRE(state.key_size == 4);
     REQUIRE(state.block_size == 4);
     REQUIRE(state.num_rounds == 10);
@@ -209,7 +209,5 @@ TEST_CASE("demo") {
 
     CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
     CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
-
-    aes_finish(&state);
 }
 

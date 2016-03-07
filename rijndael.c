@@ -183,7 +183,11 @@ void rijndael_rmixcolumns(void *block, size_t block_size) {
     }
 }
 
-int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, size_t block_size, size_t num_rounds) {
+int rijndael_init(rijndael_state *state, const void *key, size_t key_size, size_t block_size, size_t num_rounds) {
+    return rijndael_init_iv(state, key, key_size, block_size, num_rounds, NULL);
+}
+
+int rijndael_init_iv(rijndael_state *state, const void *key, size_t key_size, size_t block_size, size_t num_rounds, const void *iv) {
     rijndael_init_tables();
 
     if (key_size < 128 || key_size > 256) return 0;
@@ -207,11 +211,20 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
     state->block_size = block_size;
     state->num_rounds = num_rounds;
 
+    if (iv) {
+        for (k = 0; k < block_size; ++k) {
+            state->iv[k]  = ((uint8_t*)iv)[k * 4 + 0] <<  0;
+            state->iv[k] |= ((uint8_t*)iv)[k * 4 + 1] <<  8;
+            state->iv[k] |= ((uint8_t*)iv)[k * 4 + 2] << 16;
+            state->iv[k] |= ((uint8_t*)iv)[k * 4 + 3] << 24;
+        }
+    }
+
     for (k = 0; k < key_size; ++k) {
-        state->key[k]  = key[k * 4 + 0] <<  0;
-        state->key[k] |= key[k * 4 + 1] <<  8;
-        state->key[k] |= key[k * 4 + 2] << 16;
-        state->key[k] |= key[k * 4 + 3] << 24;
+        state->key[k]  = ((uint8_t*)key)[k * 4 + 0] <<  0;
+        state->key[k] |= ((uint8_t*)key)[k * 4 + 1] <<  8;
+        state->key[k] |= ((uint8_t*)key)[k * 4 + 2] << 16;
+        state->key[k] |= ((uint8_t*)key)[k * 4 + 3] << 24;
     }
 
     for (i = 0; k < key_cols; ++k) {
@@ -230,18 +243,58 @@ int rijndael_begin(rijndael_state *state, const uint8_t *key, size_t key_size, s
     return 1;
 }
 
+void rijndael_encrypt_block(rijndael_state *state, void *block) {
+    uint32_t *key = state->key;
+
+    rijndael_addroundkey(block, state->block_size, key);
+    key += state->block_size;
+
+    for (size_t r = 1; r < state->num_rounds; ++r) {
+        rijndael_subbytes(block, state->block_size);
+        rijndael_shiftrows(block, state->block_size);
+        rijndael_mixcolumns(block, state->block_size);
+        rijndael_addroundkey(block, state->block_size, key);
+        key += state->block_size;
+    }
+
+    rijndael_subbytes(block, state->block_size);
+    rijndael_shiftrows(block, state->block_size);
+    rijndael_addroundkey(block, state->block_size, key);
+}
+
+void rijndael_decrypt_block(rijndael_state *state, void *block) {
+    uint32_t *key = state->key + state->block_size * state->num_rounds;
+
+    rijndael_addroundkey(block, state->block_size, key);
+    key -= state->block_size;
+    rijndael_rshiftrows(block, state->block_size);
+    rijndael_rsubbytes(block, state->block_size);
+
+    for (size_t r = 1; r < state->num_rounds; ++r) {
+        rijndael_addroundkey(block, state->block_size, key);
+        key -= state->block_size;
+        rijndael_rmixcolumns(block, state->block_size);
+        rijndael_rshiftrows(block, state->block_size);
+        rijndael_rsubbytes(block, state->block_size);
+    }
+
+    rijndael_addroundkey(block, state->block_size, key);
+}
+
 size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    return rijndael_encrypt_ecb(state, plaintext, ciphertext, size);
+}
+
+size_t rijndael_encrypt_ecb(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
     uint8_t *indata, *outdata;
     size_t i, j, r;
 
     indata = (uint8_t*)plaintext;
     outdata = (uint8_t*)ciphertext;
 
-    uint32_t *block = state->block;
+    uint32_t block[8];
 
     for (i = 0; i < size; i += 4 * state->block_size) {
-
-        uint32_t *key = state->key;
 
         for (j = 0; j < state->block_size; ++j) {
             block[j]  = indata[i + j * 4 + 0] <<  0;
@@ -250,20 +303,7 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
             block[j] |= indata[i + j * 4 + 3] << 24;
         }
 
-        rijndael_addroundkey(block, state->block_size, key);
-        key += state->block_size;
-
-        for (r = 1; r < state->num_rounds; ++r) {
-            rijndael_subbytes(block, state->block_size);
-            rijndael_shiftrows(block, state->block_size);
-            rijndael_mixcolumns(block, state->block_size);
-            rijndael_addroundkey(block, state->block_size, key);
-            key += state->block_size;
-        }
-
-        rijndael_subbytes(block, state->block_size);
-        rijndael_shiftrows(block, state->block_size);
-        rijndael_addroundkey(block, state->block_size, key);
+        rijndael_encrypt_block(state, block);
 
         for (j = 0; j < state->block_size; ++j) {
             outdata[i + j * 4 + 0] = block[j] >>  0;
@@ -276,18 +316,89 @@ size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciph
     return i;
 }
 
+size_t rijndael_encrypt_cbc(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    uint8_t *indata, *outdata;
+    size_t i, j, r;
+
+    indata = (uint8_t*)plaintext;
+    outdata = (uint8_t*)ciphertext;
+
+    uint32_t block[8];
+
+    for (i = 0; i < size; i += 4 * state->block_size) {
+
+        for (j = 0; j < state->block_size; ++j) {
+            uint32_t t;
+            block[j]  = indata[i + j * 4 + 0] <<  0;
+            block[j] |= indata[i + j * 4 + 1] <<  8;
+            block[j] |= indata[i + j * 4 + 2] << 16;
+            block[j] |= indata[i + j * 4 + 3] << 24;
+            block[j] ^= state->iv[j];
+        }
+
+        rijndael_encrypt_block(state, block);
+
+        for (j = 0; j < state->block_size; ++j) {
+            state->iv[j] = block[j];
+            outdata[i + j * 4 + 0] = block[j] >>  0;
+            outdata[i + j * 4 + 1] = block[j] >>  8;
+            outdata[i + j * 4 + 2] = block[j] >> 16;
+            outdata[i + j * 4 + 3] = block[j] >> 24;
+        }
+    }
+
+    return i;
+}
+
+size_t rijndael_encrypt_ofb(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    uint8_t *indata, *outdata;
+    size_t i, j, r;
+
+    indata = (uint8_t*)plaintext;
+    outdata = (uint8_t*)ciphertext;
+
+    uint32_t block[8];
+
+    for (i = 0; i < size; i += 4 * state->block_size) {
+
+        rijndael_decrypt_block(state, state->iv);
+
+        for (j = 0; j < state->block_size; ++j) {
+            block[j]  = indata[i + j * 4 + 0] <<  0;
+            block[j] |= indata[i + j * 4 + 1] <<  8;
+            block[j] |= indata[i + j * 4 + 2] << 16;
+            block[j] |= indata[i + j * 4 + 3] << 24;
+
+            block[j] ^= state->iv[j];
+
+            outdata[i + j * 4 + 0] = block[j] >>  0;
+            outdata[i + j * 4 + 1] = block[j] >>  8;
+            outdata[i + j * 4 + 2] = block[j] >> 16;
+            outdata[i + j * 4 + 3] = block[j] >> 24;
+        }
+    }
+
+    return i;
+}
+
+size_t rijndael_encrypt_cfb(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    return 0;
+}
+
 size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *plaintext, size_t size) {
+    return rijndael_decrypt_ecb(state, ciphertext, plaintext, size);
+}
+
+size_t rijndael_decrypt_ecb(rijndael_state *state, const void *ciphertext, void *plaintext, size_t size) {
     uint8_t *indata, *outdata;
     size_t i, j, r;
 
     indata = (uint8_t*)ciphertext;
     outdata = (uint8_t*)plaintext;
 
-    uint32_t *block = state->block;
+    uint32_t block[8];
 
     for (i = 0; i < size; i += 4 * state->block_size) {
-
-        uint32_t *key = state->key + state->block_size * state->num_rounds;
 
         for (j = 0; j < state->block_size; ++j) {
             block[j]  = indata[i + j * 4 + 0] <<  0;
@@ -296,20 +407,7 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
             block[j] |= indata[i + j * 4 + 3] << 24;
         }
 
-        rijndael_addroundkey(block, state->block_size, key);
-        key -= state->block_size;
-        rijndael_rshiftrows(block, state->block_size);
-        rijndael_rsubbytes(block, state->block_size);
-
-        for (r = 1; r < state->num_rounds; ++r) {
-            rijndael_addroundkey(block, state->block_size, key);
-            key -= state->block_size;
-            rijndael_rmixcolumns(block, state->block_size);
-            rijndael_rshiftrows(block, state->block_size);
-            rijndael_rsubbytes(block, state->block_size);
-        }
-
-        rijndael_addroundkey(block, state->block_size, key);
+        rijndael_decrypt_block(state, block);
 
         for (j = 0; j < state->block_size; ++j) {
             outdata[i + j * 4 + 0] = block[j] >>  0;
@@ -322,28 +420,123 @@ size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *pla
     return i;
 }
 
-void rijndael_finish(rijndael_state *state) {
-    state->key_size = 0;
-    state->block_size = 0;
-    state->num_rounds = 0;
+size_t rijndael_decrypt_cbc(rijndael_state *state, const void *ciphertext, void *plaintext, size_t size) {
+    uint8_t *indata, *outdata;
+    size_t i, j, r;
+
+    indata = (uint8_t*)ciphertext;
+    outdata = (uint8_t*)plaintext;
+
+    uint32_t block[8];
+    uint32_t newiv[8];
+
+    for (i = 0; i < size; i += 4 * state->block_size) {
+
+        for (j = 0; j < state->block_size; ++j) {
+            block[j]  = indata[i + j * 4 + 0] <<  0;
+            block[j] |= indata[i + j * 4 + 1] <<  8;
+            block[j] |= indata[i + j * 4 + 2] << 16;
+            block[j] |= indata[i + j * 4 + 3] << 24;
+            newiv[j] = block[j];
+        }
+
+        rijndael_decrypt_block(state, block);
+
+        for (j = 0; j < state->block_size; ++j) {
+            block[j] ^= state->iv[j];
+            state->iv[j] = newiv[j];
+            outdata[i + j * 4 + 0] = block[j] >>  0;
+            outdata[i + j * 4 + 1] = block[j] >>  8;
+            outdata[i + j * 4 + 2] = block[j] >> 16;
+            outdata[i + j * 4 + 3] = block[j] >> 24;
+        }
+    }
+
+    return i;
+}
+
+size_t rijndael_decrypt_ofb(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    uint8_t *indata, *outdata;
+    size_t i, j, r;
+
+    indata = (uint8_t*)ciphertext;
+    outdata = (uint8_t*)plaintext;
+
+    uint32_t block[8];
+
+    for (i = 0; i < size; i += 4 * state->block_size) {
+
+        rijndael_decrypt_block(state, state->iv);
+
+        for (j = 0; j < state->block_size; ++j) {
+            block[j]  = indata[i + j * 4 + 0] <<  0;
+            block[j] |= indata[i + j * 4 + 1] <<  8;
+            block[j] |= indata[i + j * 4 + 2] << 16;
+            block[j] |= indata[i + j * 4 + 3] << 24;
+
+            block[j] ^= state->iv[j];
+
+            outdata[i + j * 4 + 0] = block[j] >>  0;
+            outdata[i + j * 4 + 1] = block[j] >>  8;
+            outdata[i + j * 4 + 2] = block[j] >> 16;
+            outdata[i + j * 4 + 3] = block[j] >> 24;
+        }
+    }
+
+    return i;
+}
+
+size_t rijndael_decrypt_cfb(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    return 0;
 }
 
 /* wrappers for above specifically for AES usage */
 
-int aes_begin(aes_state *state, const uint8_t *key, size_t key_size) {
-    key_size = (key_size + 63) & (~63);
-    return rijndael_begin(state, key, key_size, 128, 0);
+int aes_init(aes_state *state, const void *key, size_t key_size) {
+    return rijndael_init(state, key, (key_size + 63) & (~63), 128, 0);
+}
+
+int aes_init_iv(aes_state *state, const void *key, size_t key_size, const void *iv) {
+    return rijndael_init_iv(state, key, (key_size + 63) & (~63), 128, 0, iv);
 }
 
 size_t aes_encrypt(aes_state *state, const void *plaintext, void *ciphertext, size_t size) {
-    return rijndael_encrypt(state, plaintext, ciphertext, size);
+    return rijndael_encrypt_ecb(state, plaintext, ciphertext, size);
+}
+
+size_t aes_encrypt_ecb(aes_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    return rijndael_encrypt_ecb(state, plaintext, ciphertext, size);
+}
+
+size_t aes_encrypt_cbc(aes_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    return rijndael_encrypt_cbc(state, plaintext, ciphertext, size);
+}
+
+size_t aes_encrypt_ofb(aes_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    return rijndael_encrypt_ofb(state, plaintext, ciphertext, size);
+}
+
+size_t aes_encrypt_cfb(aes_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    return rijndael_encrypt_cfb(state, plaintext, ciphertext, size);
 }
 
 size_t aes_decrypt(aes_state *state, const void *ciphertext, void *plaintext, size_t size) {
-    return rijndael_decrypt(state, ciphertext, plaintext, size);
+    return rijndael_decrypt_ecb(state, ciphertext, plaintext, size);
 }
 
-void aes_finish(aes_state *state) {
-    rijndael_finish(state);
+size_t aes_decrypt_ecb(aes_state *state, const void *ciphertext, void *plaintext, size_t size) {
+    return rijndael_decrypt_ecb(state, ciphertext, plaintext, size);
+}
+
+size_t aes_decrypt_cbc(aes_state *state, const void *ciphertext, void *plaintext, size_t size) {
+    return rijndael_decrypt_cbc(state, ciphertext, plaintext, size);
+}
+
+size_t aes_decrypt_ofb(aes_state *state, const void *ciphertext, void *plaintext, size_t size) {
+    return rijndael_decrypt_ofb(state, ciphertext, plaintext, size);
+}
+
+size_t aes_decrypt_cfb(aes_state *state, const void *ciphertext, void *plaintext, size_t size) {
+    return rijndael_decrypt_cfb(state, ciphertext, plaintext, size);
 }
 
