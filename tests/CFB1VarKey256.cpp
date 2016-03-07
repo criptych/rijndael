@@ -2,6659 +2,8203 @@
 #include "catch.hpp"
 #include <cstring>
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-0", "[CFB1][VarKey][256][ENCRYPT]") {
+static inline std::string buf2str(const uint8_t *buf, size_t len) {
+    std::ostringstream ss; ss << std::hex << std::setfill('0');
+    for (size_t i = 0; i < len; ++i) {
+        ss << std::setw(2) << static_cast<int>(buf[i]) << ' ';
+    }
+    return ss.str();
+}
+
+TEST_CASE("CFB1VarKey256-ENCRYPT-0", "[CFB1][VarKey][256][ENCRYPT][n0]") {
     const uint8_t KEY[] = { 0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-1", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-1", "[CFB1][VarKey][256][ENCRYPT][n1]") {
     const uint8_t KEY[] = { 0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-2", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-2", "[CFB1][VarKey][256][ENCRYPT][n2]") {
     const uint8_t KEY[] = { 0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-3", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-3", "[CFB1][VarKey][256][ENCRYPT][n3]") {
     const uint8_t KEY[] = { 0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-4", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-4", "[CFB1][VarKey][256][ENCRYPT][n4]") {
     const uint8_t KEY[] = { 0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-5", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-5", "[CFB1][VarKey][256][ENCRYPT][n5]") {
     const uint8_t KEY[] = { 0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-6", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-6", "[CFB1][VarKey][256][ENCRYPT][n6]") {
     const uint8_t KEY[] = { 0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-7", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-7", "[CFB1][VarKey][256][ENCRYPT][n7]") {
     const uint8_t KEY[] = { 0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-8", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-8", "[CFB1][VarKey][256][ENCRYPT][n8]") {
     const uint8_t KEY[] = { 0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-9", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-9", "[CFB1][VarKey][256][ENCRYPT][n9]") {
     const uint8_t KEY[] = { 0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-10", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-10", "[CFB1][VarKey][256][ENCRYPT][n10]") {
     const uint8_t KEY[] = { 0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-11", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-11", "[CFB1][VarKey][256][ENCRYPT][n11]") {
     const uint8_t KEY[] = { 0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-12", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-12", "[CFB1][VarKey][256][ENCRYPT][n12]") {
     const uint8_t KEY[] = { 0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-13", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-13", "[CFB1][VarKey][256][ENCRYPT][n13]") {
     const uint8_t KEY[] = { 0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-14", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-14", "[CFB1][VarKey][256][ENCRYPT][n14]") {
     const uint8_t KEY[] = { 0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-15", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-15", "[CFB1][VarKey][256][ENCRYPT][n15]") {
     const uint8_t KEY[] = { 0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-16", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-16", "[CFB1][VarKey][256][ENCRYPT][n16]") {
     const uint8_t KEY[] = { 0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-17", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-17", "[CFB1][VarKey][256][ENCRYPT][n17]") {
     const uint8_t KEY[] = { 0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-18", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-18", "[CFB1][VarKey][256][ENCRYPT][n18]") {
     const uint8_t KEY[] = { 0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-19", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-19", "[CFB1][VarKey][256][ENCRYPT][n19]") {
     const uint8_t KEY[] = { 0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-20", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-20", "[CFB1][VarKey][256][ENCRYPT][n20]") {
     const uint8_t KEY[] = { 0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-21", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-21", "[CFB1][VarKey][256][ENCRYPT][n21]") {
     const uint8_t KEY[] = { 0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-22", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-22", "[CFB1][VarKey][256][ENCRYPT][n22]") {
     const uint8_t KEY[] = { 0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-23", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-23", "[CFB1][VarKey][256][ENCRYPT][n23]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-24", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-24", "[CFB1][VarKey][256][ENCRYPT][n24]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-25", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-25", "[CFB1][VarKey][256][ENCRYPT][n25]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-26", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-26", "[CFB1][VarKey][256][ENCRYPT][n26]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-27", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-27", "[CFB1][VarKey][256][ENCRYPT][n27]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-28", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-28", "[CFB1][VarKey][256][ENCRYPT][n28]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-29", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-29", "[CFB1][VarKey][256][ENCRYPT][n29]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-30", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-30", "[CFB1][VarKey][256][ENCRYPT][n30]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-31", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-31", "[CFB1][VarKey][256][ENCRYPT][n31]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-32", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-32", "[CFB1][VarKey][256][ENCRYPT][n32]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-33", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-33", "[CFB1][VarKey][256][ENCRYPT][n33]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-34", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-34", "[CFB1][VarKey][256][ENCRYPT][n34]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-35", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-35", "[CFB1][VarKey][256][ENCRYPT][n35]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-36", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-36", "[CFB1][VarKey][256][ENCRYPT][n36]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-37", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-37", "[CFB1][VarKey][256][ENCRYPT][n37]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-38", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-38", "[CFB1][VarKey][256][ENCRYPT][n38]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-39", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-39", "[CFB1][VarKey][256][ENCRYPT][n39]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-40", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-40", "[CFB1][VarKey][256][ENCRYPT][n40]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-41", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-41", "[CFB1][VarKey][256][ENCRYPT][n41]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-42", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-42", "[CFB1][VarKey][256][ENCRYPT][n42]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-43", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-43", "[CFB1][VarKey][256][ENCRYPT][n43]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-44", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-44", "[CFB1][VarKey][256][ENCRYPT][n44]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-45", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-45", "[CFB1][VarKey][256][ENCRYPT][n45]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-46", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-46", "[CFB1][VarKey][256][ENCRYPT][n46]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-47", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-47", "[CFB1][VarKey][256][ENCRYPT][n47]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-48", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-48", "[CFB1][VarKey][256][ENCRYPT][n48]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-49", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-49", "[CFB1][VarKey][256][ENCRYPT][n49]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-50", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-50", "[CFB1][VarKey][256][ENCRYPT][n50]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-51", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-51", "[CFB1][VarKey][256][ENCRYPT][n51]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-52", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-52", "[CFB1][VarKey][256][ENCRYPT][n52]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-53", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-53", "[CFB1][VarKey][256][ENCRYPT][n53]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-54", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-54", "[CFB1][VarKey][256][ENCRYPT][n54]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-55", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-55", "[CFB1][VarKey][256][ENCRYPT][n55]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-56", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-56", "[CFB1][VarKey][256][ENCRYPT][n56]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-57", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-57", "[CFB1][VarKey][256][ENCRYPT][n57]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-58", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-58", "[CFB1][VarKey][256][ENCRYPT][n58]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-59", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-59", "[CFB1][VarKey][256][ENCRYPT][n59]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-60", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-60", "[CFB1][VarKey][256][ENCRYPT][n60]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-61", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-61", "[CFB1][VarKey][256][ENCRYPT][n61]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-62", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-62", "[CFB1][VarKey][256][ENCRYPT][n62]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-63", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-63", "[CFB1][VarKey][256][ENCRYPT][n63]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-64", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-64", "[CFB1][VarKey][256][ENCRYPT][n64]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-65", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-65", "[CFB1][VarKey][256][ENCRYPT][n65]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-66", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-66", "[CFB1][VarKey][256][ENCRYPT][n66]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-67", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-67", "[CFB1][VarKey][256][ENCRYPT][n67]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-68", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-68", "[CFB1][VarKey][256][ENCRYPT][n68]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-69", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-69", "[CFB1][VarKey][256][ENCRYPT][n69]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-70", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-70", "[CFB1][VarKey][256][ENCRYPT][n70]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-71", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-71", "[CFB1][VarKey][256][ENCRYPT][n71]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-72", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-72", "[CFB1][VarKey][256][ENCRYPT][n72]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-73", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-73", "[CFB1][VarKey][256][ENCRYPT][n73]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-74", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-74", "[CFB1][VarKey][256][ENCRYPT][n74]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-75", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-75", "[CFB1][VarKey][256][ENCRYPT][n75]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-76", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-76", "[CFB1][VarKey][256][ENCRYPT][n76]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-77", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-77", "[CFB1][VarKey][256][ENCRYPT][n77]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-78", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-78", "[CFB1][VarKey][256][ENCRYPT][n78]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-79", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-79", "[CFB1][VarKey][256][ENCRYPT][n79]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-80", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-80", "[CFB1][VarKey][256][ENCRYPT][n80]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-81", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-81", "[CFB1][VarKey][256][ENCRYPT][n81]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-82", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-82", "[CFB1][VarKey][256][ENCRYPT][n82]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-83", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-83", "[CFB1][VarKey][256][ENCRYPT][n83]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-84", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-84", "[CFB1][VarKey][256][ENCRYPT][n84]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-85", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-85", "[CFB1][VarKey][256][ENCRYPT][n85]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-86", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-86", "[CFB1][VarKey][256][ENCRYPT][n86]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-87", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-87", "[CFB1][VarKey][256][ENCRYPT][n87]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-88", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-88", "[CFB1][VarKey][256][ENCRYPT][n88]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-89", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-89", "[CFB1][VarKey][256][ENCRYPT][n89]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-90", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-90", "[CFB1][VarKey][256][ENCRYPT][n90]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-91", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-91", "[CFB1][VarKey][256][ENCRYPT][n91]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-92", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-92", "[CFB1][VarKey][256][ENCRYPT][n92]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-93", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-93", "[CFB1][VarKey][256][ENCRYPT][n93]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-94", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-94", "[CFB1][VarKey][256][ENCRYPT][n94]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-95", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-95", "[CFB1][VarKey][256][ENCRYPT][n95]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-96", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-96", "[CFB1][VarKey][256][ENCRYPT][n96]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-97", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-97", "[CFB1][VarKey][256][ENCRYPT][n97]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-98", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-98", "[CFB1][VarKey][256][ENCRYPT][n98]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-99", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-99", "[CFB1][VarKey][256][ENCRYPT][n99]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-100", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-100", "[CFB1][VarKey][256][ENCRYPT][n100]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-101", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-101", "[CFB1][VarKey][256][ENCRYPT][n101]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-102", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-102", "[CFB1][VarKey][256][ENCRYPT][n102]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-103", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-103", "[CFB1][VarKey][256][ENCRYPT][n103]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-104", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-104", "[CFB1][VarKey][256][ENCRYPT][n104]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-105", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-105", "[CFB1][VarKey][256][ENCRYPT][n105]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-106", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-106", "[CFB1][VarKey][256][ENCRYPT][n106]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-107", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-107", "[CFB1][VarKey][256][ENCRYPT][n107]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-108", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-108", "[CFB1][VarKey][256][ENCRYPT][n108]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-109", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-109", "[CFB1][VarKey][256][ENCRYPT][n109]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-110", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-110", "[CFB1][VarKey][256][ENCRYPT][n110]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-111", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-111", "[CFB1][VarKey][256][ENCRYPT][n111]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-112", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-112", "[CFB1][VarKey][256][ENCRYPT][n112]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-113", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-113", "[CFB1][VarKey][256][ENCRYPT][n113]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-114", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-114", "[CFB1][VarKey][256][ENCRYPT][n114]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-115", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-115", "[CFB1][VarKey][256][ENCRYPT][n115]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-116", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-116", "[CFB1][VarKey][256][ENCRYPT][n116]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-117", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-117", "[CFB1][VarKey][256][ENCRYPT][n117]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-118", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-118", "[CFB1][VarKey][256][ENCRYPT][n118]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-119", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-119", "[CFB1][VarKey][256][ENCRYPT][n119]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-120", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-120", "[CFB1][VarKey][256][ENCRYPT][n120]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-121", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-121", "[CFB1][VarKey][256][ENCRYPT][n121]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-122", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-122", "[CFB1][VarKey][256][ENCRYPT][n122]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-123", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-123", "[CFB1][VarKey][256][ENCRYPT][n123]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-124", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-124", "[CFB1][VarKey][256][ENCRYPT][n124]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-125", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-125", "[CFB1][VarKey][256][ENCRYPT][n125]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-126", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-126", "[CFB1][VarKey][256][ENCRYPT][n126]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-127", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-127", "[CFB1][VarKey][256][ENCRYPT][n127]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-128", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-128", "[CFB1][VarKey][256][ENCRYPT][n128]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-129", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-129", "[CFB1][VarKey][256][ENCRYPT][n129]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-130", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-130", "[CFB1][VarKey][256][ENCRYPT][n130]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-131", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-131", "[CFB1][VarKey][256][ENCRYPT][n131]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-132", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-132", "[CFB1][VarKey][256][ENCRYPT][n132]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-133", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-133", "[CFB1][VarKey][256][ENCRYPT][n133]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-134", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-134", "[CFB1][VarKey][256][ENCRYPT][n134]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-135", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-135", "[CFB1][VarKey][256][ENCRYPT][n135]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-136", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-136", "[CFB1][VarKey][256][ENCRYPT][n136]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-137", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-137", "[CFB1][VarKey][256][ENCRYPT][n137]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-138", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-138", "[CFB1][VarKey][256][ENCRYPT][n138]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-139", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-139", "[CFB1][VarKey][256][ENCRYPT][n139]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-140", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-140", "[CFB1][VarKey][256][ENCRYPT][n140]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-141", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-141", "[CFB1][VarKey][256][ENCRYPT][n141]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-142", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-142", "[CFB1][VarKey][256][ENCRYPT][n142]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-143", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-143", "[CFB1][VarKey][256][ENCRYPT][n143]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-144", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-144", "[CFB1][VarKey][256][ENCRYPT][n144]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-145", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-145", "[CFB1][VarKey][256][ENCRYPT][n145]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-146", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-146", "[CFB1][VarKey][256][ENCRYPT][n146]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-147", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-147", "[CFB1][VarKey][256][ENCRYPT][n147]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-148", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-148", "[CFB1][VarKey][256][ENCRYPT][n148]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-149", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-149", "[CFB1][VarKey][256][ENCRYPT][n149]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-150", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-150", "[CFB1][VarKey][256][ENCRYPT][n150]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-151", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-151", "[CFB1][VarKey][256][ENCRYPT][n151]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-152", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-152", "[CFB1][VarKey][256][ENCRYPT][n152]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-153", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-153", "[CFB1][VarKey][256][ENCRYPT][n153]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-154", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-154", "[CFB1][VarKey][256][ENCRYPT][n154]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-155", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-155", "[CFB1][VarKey][256][ENCRYPT][n155]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-156", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-156", "[CFB1][VarKey][256][ENCRYPT][n156]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-157", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-157", "[CFB1][VarKey][256][ENCRYPT][n157]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-158", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-158", "[CFB1][VarKey][256][ENCRYPT][n158]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-159", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-159", "[CFB1][VarKey][256][ENCRYPT][n159]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-160", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-160", "[CFB1][VarKey][256][ENCRYPT][n160]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-161", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-161", "[CFB1][VarKey][256][ENCRYPT][n161]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-162", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-162", "[CFB1][VarKey][256][ENCRYPT][n162]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-163", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-163", "[CFB1][VarKey][256][ENCRYPT][n163]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-164", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-164", "[CFB1][VarKey][256][ENCRYPT][n164]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-165", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-165", "[CFB1][VarKey][256][ENCRYPT][n165]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-166", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-166", "[CFB1][VarKey][256][ENCRYPT][n166]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-167", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-167", "[CFB1][VarKey][256][ENCRYPT][n167]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-168", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-168", "[CFB1][VarKey][256][ENCRYPT][n168]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-169", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-169", "[CFB1][VarKey][256][ENCRYPT][n169]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-170", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-170", "[CFB1][VarKey][256][ENCRYPT][n170]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-171", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-171", "[CFB1][VarKey][256][ENCRYPT][n171]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-172", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-172", "[CFB1][VarKey][256][ENCRYPT][n172]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-173", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-173", "[CFB1][VarKey][256][ENCRYPT][n173]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-174", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-174", "[CFB1][VarKey][256][ENCRYPT][n174]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-175", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-175", "[CFB1][VarKey][256][ENCRYPT][n175]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-176", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-176", "[CFB1][VarKey][256][ENCRYPT][n176]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-177", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-177", "[CFB1][VarKey][256][ENCRYPT][n177]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-178", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-178", "[CFB1][VarKey][256][ENCRYPT][n178]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-179", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-179", "[CFB1][VarKey][256][ENCRYPT][n179]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-180", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-180", "[CFB1][VarKey][256][ENCRYPT][n180]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-181", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-181", "[CFB1][VarKey][256][ENCRYPT][n181]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-182", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-182", "[CFB1][VarKey][256][ENCRYPT][n182]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-183", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-183", "[CFB1][VarKey][256][ENCRYPT][n183]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-184", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-184", "[CFB1][VarKey][256][ENCRYPT][n184]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-185", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-185", "[CFB1][VarKey][256][ENCRYPT][n185]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-186", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-186", "[CFB1][VarKey][256][ENCRYPT][n186]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-187", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-187", "[CFB1][VarKey][256][ENCRYPT][n187]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-188", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-188", "[CFB1][VarKey][256][ENCRYPT][n188]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-189", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-189", "[CFB1][VarKey][256][ENCRYPT][n189]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-190", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-190", "[CFB1][VarKey][256][ENCRYPT][n190]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-191", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-191", "[CFB1][VarKey][256][ENCRYPT][n191]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-192", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-192", "[CFB1][VarKey][256][ENCRYPT][n192]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-193", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-193", "[CFB1][VarKey][256][ENCRYPT][n193]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-194", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-194", "[CFB1][VarKey][256][ENCRYPT][n194]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-195", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-195", "[CFB1][VarKey][256][ENCRYPT][n195]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-196", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-196", "[CFB1][VarKey][256][ENCRYPT][n196]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-197", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-197", "[CFB1][VarKey][256][ENCRYPT][n197]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-198", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-198", "[CFB1][VarKey][256][ENCRYPT][n198]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-199", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-199", "[CFB1][VarKey][256][ENCRYPT][n199]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-200", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-200", "[CFB1][VarKey][256][ENCRYPT][n200]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-201", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-201", "[CFB1][VarKey][256][ENCRYPT][n201]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-202", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-202", "[CFB1][VarKey][256][ENCRYPT][n202]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-203", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-203", "[CFB1][VarKey][256][ENCRYPT][n203]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-204", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-204", "[CFB1][VarKey][256][ENCRYPT][n204]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-205", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-205", "[CFB1][VarKey][256][ENCRYPT][n205]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-206", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-206", "[CFB1][VarKey][256][ENCRYPT][n206]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-207", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-207", "[CFB1][VarKey][256][ENCRYPT][n207]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-208", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-208", "[CFB1][VarKey][256][ENCRYPT][n208]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-209", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-209", "[CFB1][VarKey][256][ENCRYPT][n209]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-210", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-210", "[CFB1][VarKey][256][ENCRYPT][n210]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-211", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-211", "[CFB1][VarKey][256][ENCRYPT][n211]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-212", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-212", "[CFB1][VarKey][256][ENCRYPT][n212]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-213", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-213", "[CFB1][VarKey][256][ENCRYPT][n213]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-214", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-214", "[CFB1][VarKey][256][ENCRYPT][n214]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-215", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-215", "[CFB1][VarKey][256][ENCRYPT][n215]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-216", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-216", "[CFB1][VarKey][256][ENCRYPT][n216]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-217", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-217", "[CFB1][VarKey][256][ENCRYPT][n217]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-218", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-218", "[CFB1][VarKey][256][ENCRYPT][n218]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-219", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-219", "[CFB1][VarKey][256][ENCRYPT][n219]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-220", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-220", "[CFB1][VarKey][256][ENCRYPT][n220]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-221", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-221", "[CFB1][VarKey][256][ENCRYPT][n221]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-222", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-222", "[CFB1][VarKey][256][ENCRYPT][n222]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-223", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-223", "[CFB1][VarKey][256][ENCRYPT][n223]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-224", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-224", "[CFB1][VarKey][256][ENCRYPT][n224]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-225", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-225", "[CFB1][VarKey][256][ENCRYPT][n225]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-226", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-226", "[CFB1][VarKey][256][ENCRYPT][n226]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-227", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-227", "[CFB1][VarKey][256][ENCRYPT][n227]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-228", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-228", "[CFB1][VarKey][256][ENCRYPT][n228]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-229", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-229", "[CFB1][VarKey][256][ENCRYPT][n229]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-230", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-230", "[CFB1][VarKey][256][ENCRYPT][n230]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-231", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-231", "[CFB1][VarKey][256][ENCRYPT][n231]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-232", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-232", "[CFB1][VarKey][256][ENCRYPT][n232]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-233", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-233", "[CFB1][VarKey][256][ENCRYPT][n233]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-234", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-234", "[CFB1][VarKey][256][ENCRYPT][n234]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-235", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-235", "[CFB1][VarKey][256][ENCRYPT][n235]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-236", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-236", "[CFB1][VarKey][256][ENCRYPT][n236]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-237", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-237", "[CFB1][VarKey][256][ENCRYPT][n237]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-238", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-238", "[CFB1][VarKey][256][ENCRYPT][n238]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-239", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-239", "[CFB1][VarKey][256][ENCRYPT][n239]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-240", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-240", "[CFB1][VarKey][256][ENCRYPT][n240]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-241", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-241", "[CFB1][VarKey][256][ENCRYPT][n241]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-242", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-242", "[CFB1][VarKey][256][ENCRYPT][n242]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-243", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-243", "[CFB1][VarKey][256][ENCRYPT][n243]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-244", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-244", "[CFB1][VarKey][256][ENCRYPT][n244]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-245", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-245", "[CFB1][VarKey][256][ENCRYPT][n245]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-246", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-246", "[CFB1][VarKey][256][ENCRYPT][n246]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-247", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-247", "[CFB1][VarKey][256][ENCRYPT][n247]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-248", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-248", "[CFB1][VarKey][256][ENCRYPT][n248]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-249", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-249", "[CFB1][VarKey][256][ENCRYPT][n249]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-250", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-250", "[CFB1][VarKey][256][ENCRYPT][n250]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-251", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-251", "[CFB1][VarKey][256][ENCRYPT][n251]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-252", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-252", "[CFB1][VarKey][256][ENCRYPT][n252]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-253", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-253", "[CFB1][VarKey][256][ENCRYPT][n253]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-254", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-254", "[CFB1][VarKey][256][ENCRYPT][n254]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-ENCRYPT-255", "[CFB1][VarKey][256][ENCRYPT]") {
+TEST_CASE("CFB1VarKey256-ENCRYPT-255", "[CFB1][VarKey][256][ENCRYPT][n255]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_encrypt(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_encrypt_cfb1(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-0", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-0", "[CFB1][VarKey][256][DECRYPT][n0]") {
     const uint8_t KEY[] = { 0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-1", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-1", "[CFB1][VarKey][256][DECRYPT][n1]") {
     const uint8_t KEY[] = { 0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-2", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-2", "[CFB1][VarKey][256][DECRYPT][n2]") {
     const uint8_t KEY[] = { 0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-3", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-3", "[CFB1][VarKey][256][DECRYPT][n3]") {
     const uint8_t KEY[] = { 0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-4", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-4", "[CFB1][VarKey][256][DECRYPT][n4]") {
     const uint8_t KEY[] = { 0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-5", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-5", "[CFB1][VarKey][256][DECRYPT][n5]") {
     const uint8_t KEY[] = { 0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-6", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-6", "[CFB1][VarKey][256][DECRYPT][n6]") {
     const uint8_t KEY[] = { 0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-7", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-7", "[CFB1][VarKey][256][DECRYPT][n7]") {
     const uint8_t KEY[] = { 0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-8", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-8", "[CFB1][VarKey][256][DECRYPT][n8]") {
     const uint8_t KEY[] = { 0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-9", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-9", "[CFB1][VarKey][256][DECRYPT][n9]") {
     const uint8_t KEY[] = { 0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-10", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-10", "[CFB1][VarKey][256][DECRYPT][n10]") {
     const uint8_t KEY[] = { 0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-11", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-11", "[CFB1][VarKey][256][DECRYPT][n11]") {
     const uint8_t KEY[] = { 0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-12", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-12", "[CFB1][VarKey][256][DECRYPT][n12]") {
     const uint8_t KEY[] = { 0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-13", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-13", "[CFB1][VarKey][256][DECRYPT][n13]") {
     const uint8_t KEY[] = { 0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-14", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-14", "[CFB1][VarKey][256][DECRYPT][n14]") {
     const uint8_t KEY[] = { 0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-15", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-15", "[CFB1][VarKey][256][DECRYPT][n15]") {
     const uint8_t KEY[] = { 0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-16", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-16", "[CFB1][VarKey][256][DECRYPT][n16]") {
     const uint8_t KEY[] = { 0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-17", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-17", "[CFB1][VarKey][256][DECRYPT][n17]") {
     const uint8_t KEY[] = { 0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-18", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-18", "[CFB1][VarKey][256][DECRYPT][n18]") {
     const uint8_t KEY[] = { 0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-19", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-19", "[CFB1][VarKey][256][DECRYPT][n19]") {
     const uint8_t KEY[] = { 0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-20", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-20", "[CFB1][VarKey][256][DECRYPT][n20]") {
     const uint8_t KEY[] = { 0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-21", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-21", "[CFB1][VarKey][256][DECRYPT][n21]") {
     const uint8_t KEY[] = { 0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-22", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-22", "[CFB1][VarKey][256][DECRYPT][n22]") {
     const uint8_t KEY[] = { 0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-23", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-23", "[CFB1][VarKey][256][DECRYPT][n23]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-24", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-24", "[CFB1][VarKey][256][DECRYPT][n24]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-25", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-25", "[CFB1][VarKey][256][DECRYPT][n25]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-26", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-26", "[CFB1][VarKey][256][DECRYPT][n26]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-27", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-27", "[CFB1][VarKey][256][DECRYPT][n27]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-28", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-28", "[CFB1][VarKey][256][DECRYPT][n28]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-29", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-29", "[CFB1][VarKey][256][DECRYPT][n29]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-30", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-30", "[CFB1][VarKey][256][DECRYPT][n30]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-31", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-31", "[CFB1][VarKey][256][DECRYPT][n31]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-32", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-32", "[CFB1][VarKey][256][DECRYPT][n32]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-33", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-33", "[CFB1][VarKey][256][DECRYPT][n33]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-34", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-34", "[CFB1][VarKey][256][DECRYPT][n34]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-35", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-35", "[CFB1][VarKey][256][DECRYPT][n35]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-36", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-36", "[CFB1][VarKey][256][DECRYPT][n36]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-37", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-37", "[CFB1][VarKey][256][DECRYPT][n37]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-38", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-38", "[CFB1][VarKey][256][DECRYPT][n38]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-39", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-39", "[CFB1][VarKey][256][DECRYPT][n39]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-40", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-40", "[CFB1][VarKey][256][DECRYPT][n40]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-41", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-41", "[CFB1][VarKey][256][DECRYPT][n41]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-42", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-42", "[CFB1][VarKey][256][DECRYPT][n42]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-43", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-43", "[CFB1][VarKey][256][DECRYPT][n43]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-44", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-44", "[CFB1][VarKey][256][DECRYPT][n44]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-45", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-45", "[CFB1][VarKey][256][DECRYPT][n45]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-46", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-46", "[CFB1][VarKey][256][DECRYPT][n46]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-47", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-47", "[CFB1][VarKey][256][DECRYPT][n47]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-48", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-48", "[CFB1][VarKey][256][DECRYPT][n48]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-49", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-49", "[CFB1][VarKey][256][DECRYPT][n49]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-50", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-50", "[CFB1][VarKey][256][DECRYPT][n50]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-51", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-51", "[CFB1][VarKey][256][DECRYPT][n51]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-52", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-52", "[CFB1][VarKey][256][DECRYPT][n52]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-53", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-53", "[CFB1][VarKey][256][DECRYPT][n53]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-54", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-54", "[CFB1][VarKey][256][DECRYPT][n54]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-55", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-55", "[CFB1][VarKey][256][DECRYPT][n55]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-56", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-56", "[CFB1][VarKey][256][DECRYPT][n56]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-57", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-57", "[CFB1][VarKey][256][DECRYPT][n57]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-58", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-58", "[CFB1][VarKey][256][DECRYPT][n58]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-59", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-59", "[CFB1][VarKey][256][DECRYPT][n59]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-60", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-60", "[CFB1][VarKey][256][DECRYPT][n60]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-61", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-61", "[CFB1][VarKey][256][DECRYPT][n61]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-62", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-62", "[CFB1][VarKey][256][DECRYPT][n62]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-63", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-63", "[CFB1][VarKey][256][DECRYPT][n63]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-64", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-64", "[CFB1][VarKey][256][DECRYPT][n64]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-65", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-65", "[CFB1][VarKey][256][DECRYPT][n65]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-66", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-66", "[CFB1][VarKey][256][DECRYPT][n66]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-67", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-67", "[CFB1][VarKey][256][DECRYPT][n67]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-68", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-68", "[CFB1][VarKey][256][DECRYPT][n68]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-69", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-69", "[CFB1][VarKey][256][DECRYPT][n69]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-70", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-70", "[CFB1][VarKey][256][DECRYPT][n70]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-71", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-71", "[CFB1][VarKey][256][DECRYPT][n71]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-72", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-72", "[CFB1][VarKey][256][DECRYPT][n72]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-73", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-73", "[CFB1][VarKey][256][DECRYPT][n73]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-74", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-74", "[CFB1][VarKey][256][DECRYPT][n74]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-75", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-75", "[CFB1][VarKey][256][DECRYPT][n75]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-76", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-76", "[CFB1][VarKey][256][DECRYPT][n76]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-77", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-77", "[CFB1][VarKey][256][DECRYPT][n77]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-78", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-78", "[CFB1][VarKey][256][DECRYPT][n78]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-79", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-79", "[CFB1][VarKey][256][DECRYPT][n79]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-80", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-80", "[CFB1][VarKey][256][DECRYPT][n80]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-81", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-81", "[CFB1][VarKey][256][DECRYPT][n81]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-82", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-82", "[CFB1][VarKey][256][DECRYPT][n82]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-83", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-83", "[CFB1][VarKey][256][DECRYPT][n83]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-84", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-84", "[CFB1][VarKey][256][DECRYPT][n84]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-85", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-85", "[CFB1][VarKey][256][DECRYPT][n85]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-86", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-86", "[CFB1][VarKey][256][DECRYPT][n86]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-87", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-87", "[CFB1][VarKey][256][DECRYPT][n87]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-88", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-88", "[CFB1][VarKey][256][DECRYPT][n88]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-89", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-89", "[CFB1][VarKey][256][DECRYPT][n89]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-90", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-90", "[CFB1][VarKey][256][DECRYPT][n90]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-91", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-91", "[CFB1][VarKey][256][DECRYPT][n91]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-92", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-92", "[CFB1][VarKey][256][DECRYPT][n92]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-93", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-93", "[CFB1][VarKey][256][DECRYPT][n93]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-94", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-94", "[CFB1][VarKey][256][DECRYPT][n94]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-95", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-95", "[CFB1][VarKey][256][DECRYPT][n95]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-96", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-96", "[CFB1][VarKey][256][DECRYPT][n96]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-97", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-97", "[CFB1][VarKey][256][DECRYPT][n97]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-98", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-98", "[CFB1][VarKey][256][DECRYPT][n98]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-99", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-99", "[CFB1][VarKey][256][DECRYPT][n99]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-100", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-100", "[CFB1][VarKey][256][DECRYPT][n100]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-101", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-101", "[CFB1][VarKey][256][DECRYPT][n101]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-102", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-102", "[CFB1][VarKey][256][DECRYPT][n102]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-103", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-103", "[CFB1][VarKey][256][DECRYPT][n103]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-104", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-104", "[CFB1][VarKey][256][DECRYPT][n104]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-105", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-105", "[CFB1][VarKey][256][DECRYPT][n105]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-106", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-106", "[CFB1][VarKey][256][DECRYPT][n106]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-107", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-107", "[CFB1][VarKey][256][DECRYPT][n107]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-108", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-108", "[CFB1][VarKey][256][DECRYPT][n108]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-109", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-109", "[CFB1][VarKey][256][DECRYPT][n109]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-110", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-110", "[CFB1][VarKey][256][DECRYPT][n110]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-111", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-111", "[CFB1][VarKey][256][DECRYPT][n111]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-112", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-112", "[CFB1][VarKey][256][DECRYPT][n112]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-113", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-113", "[CFB1][VarKey][256][DECRYPT][n113]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-114", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-114", "[CFB1][VarKey][256][DECRYPT][n114]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-115", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-115", "[CFB1][VarKey][256][DECRYPT][n115]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-116", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-116", "[CFB1][VarKey][256][DECRYPT][n116]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-117", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-117", "[CFB1][VarKey][256][DECRYPT][n117]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-118", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-118", "[CFB1][VarKey][256][DECRYPT][n118]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-119", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-119", "[CFB1][VarKey][256][DECRYPT][n119]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-120", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-120", "[CFB1][VarKey][256][DECRYPT][n120]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-121", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-121", "[CFB1][VarKey][256][DECRYPT][n121]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-122", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-122", "[CFB1][VarKey][256][DECRYPT][n122]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-123", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-123", "[CFB1][VarKey][256][DECRYPT][n123]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-124", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-124", "[CFB1][VarKey][256][DECRYPT][n124]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-125", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-125", "[CFB1][VarKey][256][DECRYPT][n125]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-126", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-126", "[CFB1][VarKey][256][DECRYPT][n126]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-127", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-127", "[CFB1][VarKey][256][DECRYPT][n127]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-128", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-128", "[CFB1][VarKey][256][DECRYPT][n128]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-129", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-129", "[CFB1][VarKey][256][DECRYPT][n129]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-130", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-130", "[CFB1][VarKey][256][DECRYPT][n130]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-131", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-131", "[CFB1][VarKey][256][DECRYPT][n131]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-132", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-132", "[CFB1][VarKey][256][DECRYPT][n132]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-133", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-133", "[CFB1][VarKey][256][DECRYPT][n133]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-134", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-134", "[CFB1][VarKey][256][DECRYPT][n134]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-135", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-135", "[CFB1][VarKey][256][DECRYPT][n135]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-136", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-136", "[CFB1][VarKey][256][DECRYPT][n136]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-137", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-137", "[CFB1][VarKey][256][DECRYPT][n137]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-138", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-138", "[CFB1][VarKey][256][DECRYPT][n138]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-139", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-139", "[CFB1][VarKey][256][DECRYPT][n139]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-140", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-140", "[CFB1][VarKey][256][DECRYPT][n140]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-141", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-141", "[CFB1][VarKey][256][DECRYPT][n141]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-142", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-142", "[CFB1][VarKey][256][DECRYPT][n142]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-143", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-143", "[CFB1][VarKey][256][DECRYPT][n143]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-144", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-144", "[CFB1][VarKey][256][DECRYPT][n144]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-145", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-145", "[CFB1][VarKey][256][DECRYPT][n145]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-146", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-146", "[CFB1][VarKey][256][DECRYPT][n146]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-147", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-147", "[CFB1][VarKey][256][DECRYPT][n147]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-148", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-148", "[CFB1][VarKey][256][DECRYPT][n148]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-149", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-149", "[CFB1][VarKey][256][DECRYPT][n149]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-150", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-150", "[CFB1][VarKey][256][DECRYPT][n150]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-151", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-151", "[CFB1][VarKey][256][DECRYPT][n151]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-152", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-152", "[CFB1][VarKey][256][DECRYPT][n152]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-153", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-153", "[CFB1][VarKey][256][DECRYPT][n153]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-154", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-154", "[CFB1][VarKey][256][DECRYPT][n154]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-155", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-155", "[CFB1][VarKey][256][DECRYPT][n155]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-156", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-156", "[CFB1][VarKey][256][DECRYPT][n156]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-157", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-157", "[CFB1][VarKey][256][DECRYPT][n157]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-158", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-158", "[CFB1][VarKey][256][DECRYPT][n158]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-159", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-159", "[CFB1][VarKey][256][DECRYPT][n159]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-160", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-160", "[CFB1][VarKey][256][DECRYPT][n160]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-161", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-161", "[CFB1][VarKey][256][DECRYPT][n161]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-162", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-162", "[CFB1][VarKey][256][DECRYPT][n162]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-163", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-163", "[CFB1][VarKey][256][DECRYPT][n163]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-164", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-164", "[CFB1][VarKey][256][DECRYPT][n164]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-165", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-165", "[CFB1][VarKey][256][DECRYPT][n165]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-166", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-166", "[CFB1][VarKey][256][DECRYPT][n166]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-167", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-167", "[CFB1][VarKey][256][DECRYPT][n167]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-168", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-168", "[CFB1][VarKey][256][DECRYPT][n168]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-169", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-169", "[CFB1][VarKey][256][DECRYPT][n169]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-170", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-170", "[CFB1][VarKey][256][DECRYPT][n170]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-171", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-171", "[CFB1][VarKey][256][DECRYPT][n171]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-172", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-172", "[CFB1][VarKey][256][DECRYPT][n172]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-173", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-173", "[CFB1][VarKey][256][DECRYPT][n173]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-174", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-174", "[CFB1][VarKey][256][DECRYPT][n174]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-175", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-175", "[CFB1][VarKey][256][DECRYPT][n175]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-176", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-176", "[CFB1][VarKey][256][DECRYPT][n176]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-177", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-177", "[CFB1][VarKey][256][DECRYPT][n177]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-178", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-178", "[CFB1][VarKey][256][DECRYPT][n178]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-179", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-179", "[CFB1][VarKey][256][DECRYPT][n179]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-180", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-180", "[CFB1][VarKey][256][DECRYPT][n180]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-181", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-181", "[CFB1][VarKey][256][DECRYPT][n181]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-182", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-182", "[CFB1][VarKey][256][DECRYPT][n182]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-183", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-183", "[CFB1][VarKey][256][DECRYPT][n183]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-184", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-184", "[CFB1][VarKey][256][DECRYPT][n184]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-185", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-185", "[CFB1][VarKey][256][DECRYPT][n185]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-186", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-186", "[CFB1][VarKey][256][DECRYPT][n186]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-187", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-187", "[CFB1][VarKey][256][DECRYPT][n187]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-188", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-188", "[CFB1][VarKey][256][DECRYPT][n188]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-189", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-189", "[CFB1][VarKey][256][DECRYPT][n189]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-190", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-190", "[CFB1][VarKey][256][DECRYPT][n190]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-191", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-191", "[CFB1][VarKey][256][DECRYPT][n191]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-192", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-192", "[CFB1][VarKey][256][DECRYPT][n192]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-193", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-193", "[CFB1][VarKey][256][DECRYPT][n193]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-194", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-194", "[CFB1][VarKey][256][DECRYPT][n194]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-195", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-195", "[CFB1][VarKey][256][DECRYPT][n195]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-196", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-196", "[CFB1][VarKey][256][DECRYPT][n196]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-197", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-197", "[CFB1][VarKey][256][DECRYPT][n197]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-198", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-198", "[CFB1][VarKey][256][DECRYPT][n198]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-199", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-199", "[CFB1][VarKey][256][DECRYPT][n199]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-200", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-200", "[CFB1][VarKey][256][DECRYPT][n200]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-201", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-201", "[CFB1][VarKey][256][DECRYPT][n201]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-202", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-202", "[CFB1][VarKey][256][DECRYPT][n202]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-203", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-203", "[CFB1][VarKey][256][DECRYPT][n203]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-204", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-204", "[CFB1][VarKey][256][DECRYPT][n204]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-205", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-205", "[CFB1][VarKey][256][DECRYPT][n205]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-206", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-206", "[CFB1][VarKey][256][DECRYPT][n206]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-207", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-207", "[CFB1][VarKey][256][DECRYPT][n207]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-208", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-208", "[CFB1][VarKey][256][DECRYPT][n208]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-209", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-209", "[CFB1][VarKey][256][DECRYPT][n209]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-210", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-210", "[CFB1][VarKey][256][DECRYPT][n210]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-211", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-211", "[CFB1][VarKey][256][DECRYPT][n211]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-212", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-212", "[CFB1][VarKey][256][DECRYPT][n212]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-213", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-213", "[CFB1][VarKey][256][DECRYPT][n213]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-214", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-214", "[CFB1][VarKey][256][DECRYPT][n214]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-215", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-215", "[CFB1][VarKey][256][DECRYPT][n215]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-216", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-216", "[CFB1][VarKey][256][DECRYPT][n216]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-217", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-217", "[CFB1][VarKey][256][DECRYPT][n217]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-218", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-218", "[CFB1][VarKey][256][DECRYPT][n218]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-219", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-219", "[CFB1][VarKey][256][DECRYPT][n219]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-220", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-220", "[CFB1][VarKey][256][DECRYPT][n220]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-221", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-221", "[CFB1][VarKey][256][DECRYPT][n221]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-222", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-222", "[CFB1][VarKey][256][DECRYPT][n222]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-223", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-223", "[CFB1][VarKey][256][DECRYPT][n223]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-224", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-224", "[CFB1][VarKey][256][DECRYPT][n224]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-225", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-225", "[CFB1][VarKey][256][DECRYPT][n225]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-226", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-226", "[CFB1][VarKey][256][DECRYPT][n226]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-227", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-227", "[CFB1][VarKey][256][DECRYPT][n227]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-228", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-228", "[CFB1][VarKey][256][DECRYPT][n228]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-229", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-229", "[CFB1][VarKey][256][DECRYPT][n229]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-230", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-230", "[CFB1][VarKey][256][DECRYPT][n230]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-231", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-231", "[CFB1][VarKey][256][DECRYPT][n231]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-232", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-232", "[CFB1][VarKey][256][DECRYPT][n232]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-233", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-233", "[CFB1][VarKey][256][DECRYPT][n233]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-234", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-234", "[CFB1][VarKey][256][DECRYPT][n234]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-235", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-235", "[CFB1][VarKey][256][DECRYPT][n235]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-236", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-236", "[CFB1][VarKey][256][DECRYPT][n236]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-237", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-237", "[CFB1][VarKey][256][DECRYPT][n237]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-238", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-238", "[CFB1][VarKey][256][DECRYPT][n238]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-239", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-239", "[CFB1][VarKey][256][DECRYPT][n239]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-240", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-240", "[CFB1][VarKey][256][DECRYPT][n240]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-241", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-241", "[CFB1][VarKey][256][DECRYPT][n241]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-242", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-242", "[CFB1][VarKey][256][DECRYPT][n242]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-243", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-243", "[CFB1][VarKey][256][DECRYPT][n243]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-244", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-244", "[CFB1][VarKey][256][DECRYPT][n244]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-245", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-245", "[CFB1][VarKey][256][DECRYPT][n245]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-246", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-246", "[CFB1][VarKey][256][DECRYPT][n246]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-247", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-247", "[CFB1][VarKey][256][DECRYPT][n247]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-248", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-248", "[CFB1][VarKey][256][DECRYPT][n248]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-249", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-249", "[CFB1][VarKey][256][DECRYPT][n249]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-250", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-250", "[CFB1][VarKey][256][DECRYPT][n250]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xe0 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-251", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-251", "[CFB1][VarKey][256][DECRYPT][n251]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-252", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-252", "[CFB1][VarKey][256][DECRYPT][n252]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf8 };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-253", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-253", "[CFB1][VarKey][256][DECRYPT][n253]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfc };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-254", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-254", "[CFB1][VarKey][256][DECRYPT][n254]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xfe };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x1 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
-TEST_CASE("CFB1VarKey256-DECRYPT-255", "[CFB1][VarKey][256][DECRYPT]") {
+TEST_CASE("CFB1VarKey256-DECRYPT-255", "[CFB1][VarKey][256][DECRYPT][n255]") {
     const uint8_t KEY[] = { 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
     const uint8_t IV[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
     const uint8_t PLAINTEXT[] = { 0x0 };
     const uint8_t CIPHERTEXT[] = { 0x0 };
     aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_begin(&state, KEY, 8 * sizeof KEY));
-    REQUIRE(aes_decrypt(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_decrypt_cfb1(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
+    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-    aes_finish(&state);
 }
 
