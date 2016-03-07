@@ -98,13 +98,12 @@ CXX_DECRYPT_MCT = """\
 import os
 import re
 import sys
-import urllib
 import zipfile
 
 try:
-    import ConfigParser as configparser
+    from urllib import urlretrieve
 except ImportError:
-    import configparser
+    from urllib.request import urlretrieve
     unicode = str
     xrange = range
 
@@ -116,7 +115,7 @@ re_continue = re.compile('^ +([^ ].*)$')
 def get_test_file(url, fn):
     if not os.path.isfile(fn):
         print('Downloading "%s"...' % fn)
-        filename, headers = urllib.urlretrieve(url, fn)
+        filename, headers = urlretrieve(url, fn)
 
     zf = zipfile.ZipFile(fn)
 
