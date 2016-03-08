@@ -63,37 +63,43 @@ ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-msse2")         # Enable SSE2 opcodes
 ADD_LIBRARY(rijndael rijndael.h rijndael.c)
 TARGET_INCLUDE_DIRECTORIES(rijndael PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-FILE(GLOB ECB_TESTS ${CMAKE_CURRENT_BINARY_DIR}/tests/ECB*.cpp)
-FILE(GLOB CBC_TESTS ${CMAKE_CURRENT_BINARY_DIR}/tests/CBC*.cpp)
-FILE(GLOB OFB_TESTS ${CMAKE_CURRENT_BINARY_DIR}/tests/OFB*.cpp)
-FILE(GLOB CFB_TESTS ${CMAKE_CURRENT_BINARY_DIR}/tests/CFB*.cpp)
-
-ADD_EXECUTABLE(selftest catch.hpp testmain.cpp selftest.cpp)
-ADD_EXECUTABLE(ecbtest catch.hpp testmain.cpp ${ECB_TESTS})
-ADD_EXECUTABLE(cbctest catch.hpp testmain.cpp ${CBC_TESTS})
-ADD_EXECUTABLE(ofbtest catch.hpp testmain.cpp ${OFB_TESTS})
-ADD_EXECUTABLE(cfbtest catch.hpp testmain.cpp ${CFB_TESTS})
-
-TARGET_LINK_LIBRARIES(selftest rijndael)
-TARGET_LINK_LIBRARIES(ecbtest rijndael)
-TARGET_LINK_LIBRARIES(cbctest rijndael)
-TARGET_LINK_LIBRARIES(ofbtest rijndael)
-TARGET_LINK_LIBRARIES(cfbtest rijndael)
-
-ADD_CUSTOM_TARGET(gentests
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/gentests.py
-    COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/gentests.py
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+ADD_CUSTOM_COMMAND(
+    OUTPUT
+        ${CMAKE_CURRENT_BINARY_DIR}/tests/ecbtests.cpp
+        ${CMAKE_CURRENT_BINARY_DIR}/tests/cbctests.cpp
+        ${CMAKE_CURRENT_BINARY_DIR}/tests/ofbtests.cpp
+        ${CMAKE_CURRENT_BINARY_DIR}/tests/cfb1tests.cpp
+        ${CMAKE_CURRENT_BINARY_DIR}/tests/cfb8tests.cpp
+        ${CMAKE_CURRENT_BINARY_DIR}/tests/cfb128tests.cpp
+    COMMAND
+        python ${CMAKE_CURRENT_SOURCE_DIR}/gentests.py
+    DEPENDS
+        ${CMAKE_CURRENT_SOURCE_DIR}/gentests.py
+    WORKING_DIRECTORY
+        ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-ADD_DEPENDENCIES(ecbtest gentests)
-ADD_DEPENDENCIES(cbctest gentests)
-ADD_DEPENDENCIES(ofbtest gentests)
-ADD_DEPENDENCIES(cfbtest gentests)
+ADD_EXECUTABLE(selftest catch.hpp testmain.cpp selftest.cpp)
+ADD_EXECUTABLE(ecbtests catch.hpp testmain.cpp ${CMAKE_CURRENT_BINARY_DIR}/tests/ecbtests.cpp)
+ADD_EXECUTABLE(cbctests catch.hpp testmain.cpp ${CMAKE_CURRENT_BINARY_DIR}/tests/cbctests.cpp)
+ADD_EXECUTABLE(ofbtests catch.hpp testmain.cpp ${CMAKE_CURRENT_BINARY_DIR}/tests/ofbtests.cpp)
+ADD_EXECUTABLE(cfb1tests catch.hpp testmain.cpp ${CMAKE_CURRENT_BINARY_DIR}/tests/cfb1tests.cpp)
+ADD_EXECUTABLE(cfb8tests catch.hpp testmain.cpp ${CMAKE_CURRENT_BINARY_DIR}/tests/cfb8tests.cpp)
+ADD_EXECUTABLE(cfb128tests catch.hpp testmain.cpp ${CMAKE_CURRENT_BINARY_DIR}/tests/cfb128tests.cpp)
+
+TARGET_LINK_LIBRARIES(selftest rijndael)
+TARGET_LINK_LIBRARIES(ecbtests rijndael)
+TARGET_LINK_LIBRARIES(cbctests rijndael)
+TARGET_LINK_LIBRARIES(ofbtests rijndael)
+TARGET_LINK_LIBRARIES(cfb1tests rijndael)
+TARGET_LINK_LIBRARIES(cfb8tests rijndael)
+TARGET_LINK_LIBRARIES(cfb128tests rijndael)
 
 ADD_CUSTOM_TARGET(doselftest COMMAND selftest -r xml -o selftest.xml)
-ADD_CUSTOM_TARGET(doecbtest COMMAND ecbtest -r xml -o ecbtest.xml)
-ADD_CUSTOM_TARGET(docbctest COMMAND cbctest -r xml -o cbctest.xml)
-ADD_CUSTOM_TARGET(doofbtest COMMAND ofbtest -r xml -o ofbtest.xml)
-ADD_CUSTOM_TARGET(docfbtest COMMAND cfbtest -r xml -o cfbtest.xml)
+ADD_CUSTOM_TARGET(doecbtests COMMAND ecbtests -r xml -o ecbtests.xml)
+ADD_CUSTOM_TARGET(docbctests COMMAND cbctests -r xml -o cbctests.xml)
+ADD_CUSTOM_TARGET(doofbtests COMMAND ofbtests -r xml -o ofbtests.xml)
+ADD_CUSTOM_TARGET(docfb1tests COMMAND cfb1tests -r xml -o cfb1tests.xml)
+ADD_CUSTOM_TARGET(docfb8tests COMMAND cfb8tests -r xml -o cfb8tests.xml)
+ADD_CUSTOM_TARGET(docfb128tests COMMAND cfb128tests -r xml -o cfb128tests.xml)
 

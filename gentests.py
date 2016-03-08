@@ -141,6 +141,8 @@ search = [(mode, test, size) for mode in MODES for test in TESTS for size in SIZ
 notfound = []
 found = []
 
+tests = {}
+
 def hexformat(s):
     s = [s[i:i+2] for i in xrange(0, len(s), 2)]
     return ','.join('0x%s' % t for t in s)
@@ -155,8 +157,6 @@ for mode, test, size in search:
         sec = None
         var = None
         vals = {}
-
-        tests = []
 
         for line in zi:
             line = unicode(line, 'utf-8').rstrip('\r\n')
@@ -175,16 +175,18 @@ for mode, test, size in search:
 
                     if sec == 'ENCRYPT':
                         if test == 'MCT':
-                            tests.append(t + CXX_ENCRYPT_MCT % { 'mode': mode.lower() })
+                            src = (t + CXX_ENCRYPT_MCT % { 'mode': mode.lower() })
                         else:
-                            tests.append(t + CXX_ENCRYPT % { 'mode': mode.lower() })
+                            src = (t + CXX_ENCRYPT % { 'mode': mode.lower() })
                     elif sec == 'DECRYPT':
                         if test == 'MCT':
-                            tests.append(t + CXX_DECRYPT_MCT % { 'mode': mode.lower() })
+                            src = (t + CXX_DECRYPT_MCT % { 'mode': mode.lower() })
                         else:
-                            tests.append(t + CXX_DECRYPT % { 'mode': mode.lower() })
+                            src = (t + CXX_DECRYPT % { 'mode': mode.lower() })
                     else:
                         print('*** Unknown section "%s"' % sec)
+
+                    tests.setdefault(mode, []).append(src)
 
                     vals = {}
                     var = None
@@ -211,14 +213,15 @@ for mode, test, size in search:
                     vals[var] += m.group(1)
                     continue
 
-        if tests:
-            open('tests/'+mode+test+size+'.cpp','wt').write(CXX_HEADER + ''.join(tests))
-
     else:
         notfound.append(name)
 
     del names[name]
 
+for k, v in sorted(tests.items()):
+    open('tests/' + k.lower() + 'tests.cpp', 'wt').write(CXX_HEADER + ''.join(v))
+
 print('%d test modules generated' % len(found))
 print('Tests not found: %s' % (', '.join(notfound) or 'None'))
 print('Extra files: %s' % (', '.join(names) or 'None'))
+
