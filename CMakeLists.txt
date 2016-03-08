@@ -86,3 +86,8 @@ ADD_CUSTOM_TARGET(gentests
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
+ADD_DEPENDENCIES(ecbtest gentests)
+ADD_DEPENDENCIES(cbctest gentests)
+ADD_DEPENDENCIES(ofbtest gentests)
+ADD_DEPENDENCIES(cfbtest gentests)
+
