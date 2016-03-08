@@ -287,10 +287,6 @@ void rijndael_decrypt_block(rijndael_state *state, void *block) {
     rijndael_addroundkey(block, state->block_size, key);
 }
 
-size_t rijndael_encrypt(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
-    return rijndael_encrypt_ecb(state, plaintext, ciphertext, size);
-}
-
 size_t rijndael_encrypt_ecb(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
     uint8_t *indata, *outdata;
     size_t i, j, r;
@@ -389,10 +385,6 @@ size_t rijndael_encrypt_ofb(rijndael_state *state, const void *plaintext, void *
 
 size_t rijndael_encrypt_cfb(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
     return 0;
-}
-
-size_t rijndael_decrypt(rijndael_state *state, const void *ciphertext, void *plaintext, size_t size) {
-    return rijndael_decrypt_ecb(state, ciphertext, plaintext, size);
 }
 
 size_t rijndael_decrypt_ecb(rijndael_state *state, const void *ciphertext, void *plaintext, size_t size) {
@@ -510,10 +502,6 @@ void aes_set_iv(aes_state *state, const void *iv) {
     rijndael_set_iv(state, iv);
 }
 
-size_t aes_encrypt(aes_state *state, const void *plaintext, void *ciphertext, size_t size) {
-    return rijndael_encrypt_ecb(state, plaintext, ciphertext, size);
-}
-
 size_t aes_encrypt_ecb(aes_state *state, const void *plaintext, void *ciphertext, size_t size) {
     return rijndael_encrypt_ecb(state, plaintext, ciphertext, size);
 }
@@ -528,10 +516,6 @@ size_t aes_encrypt_ofb(aes_state *state, const void *plaintext, void *ciphertext
 
 size_t aes_encrypt_cfb(aes_state *state, const void *plaintext, void *ciphertext, size_t size) {
     return rijndael_encrypt_cfb(state, plaintext, ciphertext, size);
-}
-
-size_t aes_decrypt(aes_state *state, const void *ciphertext, void *plaintext, size_t size) {
-    return rijndael_decrypt_ecb(state, ciphertext, plaintext, size);
 }
 
 size_t aes_decrypt_ecb(aes_state *state, const void *ciphertext, void *plaintext, size_t size) {

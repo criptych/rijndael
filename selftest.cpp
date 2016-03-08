@@ -207,7 +207,7 @@ TEST_CASE("demo") {
     CHECK(state.key[42] == 0xc80c3fe1);
     CHECK(state.key[43] == 0xa60c63b6);
 
-    CHECK(aes_encrypt(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
+    CHECK(aes_encrypt_ecb(&state, PLAINTEXT, out, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
     CHECK(memcmp(CIPHERTEXT, out, sizeof(CIPHERTEXT)) == 0);
 }
 
