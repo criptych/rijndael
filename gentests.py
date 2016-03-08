@@ -43,6 +43,7 @@ CXX_ENCRYPT = """\
     REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
     CAPTURE(buf2str(KEY, sizeof(KEY)));
     CAPTURE(buf2str(IV, sizeof(IV)));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
     REQUIRE(aes_encrypt_%(mode)s(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
     CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
     CAPTURE(buf2str(RESULT, sizeof(RESULT)));
@@ -57,6 +58,7 @@ CXX_ENCRYPT_MCT = """\
     REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
     CAPTURE(buf2str(KEY, sizeof(KEY)));
     CAPTURE(buf2str(IV, sizeof(IV)));
+    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
     REQUIRE(aes_encrypt_%(mode)s(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
     for (size_t i = 0; i < 9999; ++i) aes_encrypt_%(mode)s(&state, RESULT, RESULT, sizeof(RESULT));
     CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
@@ -72,6 +74,7 @@ CXX_DECRYPT = """\
     REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
     CAPTURE(buf2str(KEY, sizeof(KEY)));
     CAPTURE(buf2str(IV, sizeof(IV)));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
     REQUIRE(aes_decrypt_%(mode)s(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
     CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
     CAPTURE(buf2str(RESULT, sizeof(RESULT)));
@@ -86,6 +89,7 @@ CXX_DECRYPT_MCT = """\
     REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
     CAPTURE(buf2str(KEY, sizeof(KEY)));
     CAPTURE(buf2str(IV, sizeof(IV)));
+    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
     REQUIRE(aes_decrypt_%(mode)s(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
     for (size_t i = 0; i < 9999; ++i) aes_decrypt_%(mode)s(&state, RESULT, RESULT, sizeof(RESULT));
     CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
