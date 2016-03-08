@@ -383,6 +383,14 @@ size_t rijndael_encrypt_ofb(rijndael_state *state, const void *plaintext, void *
     return i;
 }
 
+size_t rijndael_encrypt_cfb1(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    return 0;
+}
+
+size_t rijndael_encrypt_cfb8(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    return 0;
+}
+
 size_t rijndael_encrypt_cfb(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
     return 0;
 }
@@ -484,6 +492,14 @@ size_t rijndael_decrypt_ofb(rijndael_state *state, const void *plaintext, void *
     return i;
 }
 
+size_t rijndael_decrypt_cfb1(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    return 0;
+}
+
+size_t rijndael_decrypt_cfb8(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    return 0;
+}
+
 size_t rijndael_decrypt_cfb(rijndael_state *state, const void *plaintext, void *ciphertext, size_t size) {
     return 0;
 }
@@ -514,6 +530,18 @@ size_t aes_encrypt_ofb(aes_state *state, const void *plaintext, void *ciphertext
     return rijndael_encrypt_ofb(state, plaintext, ciphertext, size);
 }
 
+size_t aes_encrypt_cfb1(aes_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    return rijndael_encrypt_cfb(state, plaintext, ciphertext, size);
+}
+
+size_t aes_encrypt_cfb8(aes_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    return rijndael_encrypt_cfb(state, plaintext, ciphertext, size);
+}
+
+size_t aes_encrypt_cfb128(aes_state *state, const void *plaintext, void *ciphertext, size_t size) {
+    return rijndael_encrypt_cfb(state, plaintext, ciphertext, size);
+}
+
 size_t aes_encrypt_cfb(aes_state *state, const void *plaintext, void *ciphertext, size_t size) {
     return rijndael_encrypt_cfb(state, plaintext, ciphertext, size);
 }
@@ -528,6 +556,18 @@ size_t aes_decrypt_cbc(aes_state *state, const void *ciphertext, void *plaintext
 
 size_t aes_decrypt_ofb(aes_state *state, const void *ciphertext, void *plaintext, size_t size) {
     return rijndael_decrypt_ofb(state, ciphertext, plaintext, size);
+}
+
+size_t aes_decrypt_cfb1(aes_state *state, const void *ciphertext, void *plaintext, size_t size) {
+    return rijndael_decrypt_cfb(state, ciphertext, plaintext, size);
+}
+
+size_t aes_decrypt_cfb8(aes_state *state, const void *ciphertext, void *plaintext, size_t size) {
+    return rijndael_decrypt_cfb(state, ciphertext, plaintext, size);
+}
+
+size_t aes_decrypt_cfb128(aes_state *state, const void *ciphertext, void *plaintext, size_t size) {
+    return rijndael_decrypt_cfb(state, ciphertext, plaintext, size);
 }
 
 size_t aes_decrypt_cfb(aes_state *state, const void *ciphertext, void *plaintext, size_t size) {
