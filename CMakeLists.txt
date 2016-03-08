@@ -91,3 +91,9 @@ ADD_DEPENDENCIES(cbctest gentests)
 ADD_DEPENDENCIES(ofbtest gentests)
 ADD_DEPENDENCIES(cfbtest gentests)
 
+ADD_CUSTOM_TARGET(doselftest COMMAND selftest -r xml -o selftest.xml)
+ADD_CUSTOM_TARGET(doecbtest COMMAND ecbtest -r xml -o ecbtest.xml)
+ADD_CUSTOM_TARGET(docbctest COMMAND cbctest -r xml -o cbctest.xml)
+ADD_CUSTOM_TARGET(doofbtest COMMAND ofbtest -r xml -o ofbtest.xml)
+ADD_CUSTOM_TARGET(docfbtest COMMAND cfbtest -r xml -o cfbtest.xml)
+
