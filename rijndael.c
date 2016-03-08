@@ -361,7 +361,7 @@ size_t rijndael_encrypt_ofb(rijndael_state *state, const void *plaintext, void *
 
     for (i = 0; i < size; i += 4 * state->block_size) {
 
-        rijndael_decrypt_block(state, state->iv);
+        rijndael_encrypt_block(state, state->iv);
 
         for (j = 0; j < state->block_size; ++j) {
             block[j]  = indata[i + j * 4 + 0] <<  0;
@@ -459,14 +459,14 @@ size_t rijndael_decrypt_ofb(rijndael_state *state, const void *plaintext, void *
     uint8_t *indata, *outdata;
     size_t i, j, r;
 
-    indata = (uint8_t*)ciphertext;
-    outdata = (uint8_t*)plaintext;
+    indata = (uint8_t*)plaintext;
+    outdata = (uint8_t*)ciphertext;
 
     uint32_t block[8];
 
     for (i = 0; i < size; i += 4 * state->block_size) {
 
-        rijndael_decrypt_block(state, state->iv);
+        rijndael_encrypt_block(state, state->iv);
 
         for (j = 0; j < state->block_size; ++j) {
             block[j]  = indata[i + j * 4 + 0] <<  0;
