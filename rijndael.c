@@ -184,10 +184,6 @@ void rijndael_rmixcolumns(void *block, size_t block_size) {
 }
 
 int rijndael_init(rijndael_state *state, const void *key, size_t key_size, size_t block_size, size_t num_rounds) {
-    return rijndael_init_iv(state, key, key_size, block_size, num_rounds, NULL);
-}
-
-int rijndael_init_iv(rijndael_state *state, const void *key, size_t key_size, size_t block_size, size_t num_rounds, const void *iv) {
     rijndael_init_tables();
 
     if (key_size < 128 || key_size > 256) return 0;
@@ -203,22 +199,11 @@ int rijndael_init_iv(rijndael_state *state, const void *key, size_t key_size, si
 
     size_t key_cols = (num_rounds + 1) * block_size;
 
-    if (!state->key) return 0;
-
     size_t i, j, k;
 
     state->key_size = key_size;
     state->block_size = block_size;
     state->num_rounds = num_rounds;
-
-    if (iv) {
-        for (k = 0; k < block_size; ++k) {
-            state->iv[k]  = ((uint8_t*)iv)[k * 4 + 0] <<  0;
-            state->iv[k] |= ((uint8_t*)iv)[k * 4 + 1] <<  8;
-            state->iv[k] |= ((uint8_t*)iv)[k * 4 + 2] << 16;
-            state->iv[k] |= ((uint8_t*)iv)[k * 4 + 3] << 24;
-        }
-    }
 
     for (k = 0; k < key_size; ++k) {
         state->key[k]  = ((uint8_t*)key)[k * 4 + 0] <<  0;
@@ -241,6 +226,27 @@ int rijndael_init_iv(rijndael_state *state, const void *key, size_t key_size, si
     }
 
     return 1;
+}
+
+int rijndael_init_iv(rijndael_state *state, const void *key, size_t key_size, size_t block_size, size_t num_rounds, const void *iv) {
+    int rv = rijndael_init(state, key, key_size, block_size, num_rounds);
+    if (rv) rijndael_set_iv(state, iv);
+    return rv;
+}
+
+void rijndael_set_iv(rijndael_state *state, const void *iv) {
+    if (iv) {
+        for (size_t k = 0; k < state->block_size; ++k) {
+            state->iv[k]  = ((uint8_t*)iv)[k * 4 + 0] <<  0;
+            state->iv[k] |= ((uint8_t*)iv)[k * 4 + 1] <<  8;
+            state->iv[k] |= ((uint8_t*)iv)[k * 4 + 2] << 16;
+            state->iv[k] |= ((uint8_t*)iv)[k * 4 + 3] << 24;
+        }
+    } else {
+        for (size_t k = 0; k < state->block_size; ++k) {
+            state->iv[k] = 0;
+        }
+    }
 }
 
 void rijndael_encrypt_block(rijndael_state *state, void *block) {
@@ -498,6 +504,10 @@ int aes_init(aes_state *state, const void *key, size_t key_size) {
 
 int aes_init_iv(aes_state *state, const void *key, size_t key_size, const void *iv) {
     return rijndael_init_iv(state, key, (key_size + 63) & (~63), 128, 0, iv);
+}
+
+void aes_set_iv(aes_state *state, const void *iv) {
+    rijndael_set_iv(state, iv);
 }
 
 size_t aes_encrypt(aes_state *state, const void *plaintext, void *ciphertext, size_t size) {

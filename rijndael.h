@@ -35,7 +35,7 @@ size_t rijndael_decrypt_cfb(rijndael_state *state, const void *ciphertext, void 
 /* wrappers for above specifically for AES usage */
 int aes_init(aes_state *state, const void *key, size_t key_size);
 int aes_init_iv(aes_state *state, const void *key, size_t key_size, const void *iv);
-void aes_set_iv(aes_state *state, const void *iv, size_t iv_size);
+void aes_set_iv(aes_state *state, const void *iv);
 /** @deprecated Use aes_encrypt_ecb instead. */
 size_t aes_encrypt(aes_state *state, const void *plaintext, void *ciphertext, size_t size);
 size_t aes_encrypt_ecb(aes_state *state, const void *plaintext, void *ciphertext, size_t size);
