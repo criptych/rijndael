@@ -30,7 +30,7 @@ static inline std::string buf2str(const uint8_t *buf, size_t len) {
 """
 
 CXX_TEST = """\
-TEST_CASE("%(mode)s%(test)s%(size)s-%(sec)s-%(COUNT)s", "%(tags)s[n%(COUNT)s]") {
+TEST_CASE("%(mode)s%(test)s%(size)s-%(sec)s-%(COUNT)s", "%(tags)s") {
 """
 
 CXX_DATA = """\
