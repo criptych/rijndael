@@ -10,7 +10,7 @@ MCT_FILE = 'aesmct.zip'
 MMT_URL = 'http://csrc.nist.gov/groups/STM/cavp/documents/aes/aesmmt.zip'
 MMT_FILE = 'aesmmt.zip'
 
-MODES = 'ECB', 'CBC', 'OFB', 'CFB1', 'CFB8', 'CFB128'
+MODES = 'ECB', 'CBC', 'OFB', 'CFB128', 'CFB8'
 TESTS = 'GFSbox', 'KeySbox', 'VarKey', 'VarTxt', 'MCT', 'MMT'
 SIZES = '128', '192', '256'
 
