@@ -508,34 +508,7 @@ size_t rijndael_decrypt_cbc(rijndael_state *state, const void *ciphertext, void 
 }
 
 size_t rijndael_decrypt_ofb(rijndael_state *state, const void *ciphertext, void *plaintext, size_t size) {
-    uint8_t *indata, *outdata;
-    size_t i, j;
-
-    indata = (uint8_t*)ciphertext;
-    outdata = (uint8_t*)plaintext;
-
-    uint32_t block[8];
-
-    for (i = 0; i < size; i += 4 * state->block_size) {
-
-        rijndael_encrypt_block(state, state->iv);
-
-        for (j = 0; j < state->block_size; ++j) {
-            block[j]  = indata[i + j * 4 + 0] <<  0;
-            block[j] |= indata[i + j * 4 + 1] <<  8;
-            block[j] |= indata[i + j * 4 + 2] << 16;
-            block[j] |= indata[i + j * 4 + 3] << 24;
-
-            block[j] ^= state->iv[j];
-
-            outdata[i + j * 4 + 0] = block[j] >>  0;
-            outdata[i + j * 4 + 1] = block[j] >>  8;
-            outdata[i + j * 4 + 2] = block[j] >> 16;
-            outdata[i + j * 4 + 3] = block[j] >> 24;
-        }
-    }
-
-    return i;
+    return rijndael_encrypt_ofb(state, ciphertext, plaintext, size);
 }
 
 size_t rijndael_decrypt_cfb1(rijndael_state *state, const void *ciphertext, void *plaintext, size_t size) {
