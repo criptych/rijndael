@@ -24,14 +24,12 @@ ENDMACRO()
 # MSVC options
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "/Wall")          # Enable all warnings
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "/WX")            # Treat warnings as errors
-ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "/Za")            # Disable language extensions
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "/Zi")            # Generate debugging information (PDB)
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "/arch:SSE")      # Enable SSE opcodes
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "/arch:SSE2")     # Enable SSE2 opcodes
 
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "/Wall")          # Enable all warnings
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "/WX")            # Treat warnings as errors
-ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "/Za")            # Disable language extensions
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "/Zi")            # Generate debugging information (PDB)
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "/arch:SSE")      # Enable SSE opcodes
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "/arch:SSE2")     # Enable SSE2 opcodes
