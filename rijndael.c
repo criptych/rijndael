@@ -172,28 +172,30 @@ void rijndael_rshiftrows(void *block, size_t block_size) {
 }
 
 void rijndael_mixcolumns(void *block, size_t block_size) {
-    uint8_t *bytes = (uint8_t*)block;
-    size_t i;
+    uint32_t *p = block;
 
-    for (i = 0; i < block_size; ++i) {
-        uint8_t a[4] = { bytes[4*i+0], bytes[4*i+1], bytes[4*i+2], bytes[4*i+3] };
-        bytes[4*i+0] = g2[a[0]] ^ g3[a[1]] ^ a[2] ^ a[3];
-        bytes[4*i+1] = g2[a[1]] ^ g3[a[2]] ^ a[3] ^ a[0];
-        bytes[4*i+2] = g2[a[2]] ^ g3[a[3]] ^ a[0] ^ a[1];
-        bytes[4*i+3] = g2[a[3]] ^ g3[a[0]] ^ a[1] ^ a[2];
+    for (size_t i = 0; i < block_size; ++i, ++p) {
+        uint8_t a[4], b[4];
+        putword(a, *p);
+        b[0] = g2[a[0]] ^ g3[a[1]] ^ a[2] ^ a[3];
+        b[1] = g2[a[1]] ^ g3[a[2]] ^ a[3] ^ a[0];
+        b[2] = g2[a[2]] ^ g3[a[3]] ^ a[0] ^ a[1];
+        b[3] = g2[a[3]] ^ g3[a[0]] ^ a[1] ^ a[2];
+        *p = getword(b);
     }
 }
 
 void rijndael_rmixcolumns(void *block, size_t block_size) {
-    uint8_t *bytes = (uint8_t*)block;
-    size_t i;
+    uint32_t *p = block;
 
-    for (i = 0; i < block_size; ++i) {
-        uint8_t a[4] = { bytes[4*i+0], bytes[4*i+1], bytes[4*i+2], bytes[4*i+3] };
-        bytes[4*i+0] = g14[a[0]] ^ g11[a[1]] ^ g13[a[2]] ^ g9[a[3]];
-        bytes[4*i+1] = g14[a[1]] ^ g11[a[2]] ^ g13[a[3]] ^ g9[a[0]];
-        bytes[4*i+2] = g14[a[2]] ^ g11[a[3]] ^ g13[a[0]] ^ g9[a[1]];
-        bytes[4*i+3] = g14[a[3]] ^ g11[a[0]] ^ g13[a[1]] ^ g9[a[2]];
+    for (size_t i = 0; i < block_size; ++i, ++p) {
+        uint8_t a[4], b[4];
+        putword(a, *p);
+        b[0] = g14[a[0]] ^ g11[a[1]] ^ g13[a[2]] ^ g9[a[3]];
+        b[1] = g14[a[1]] ^ g11[a[2]] ^ g13[a[3]] ^ g9[a[0]];
+        b[2] = g14[a[2]] ^ g11[a[3]] ^ g13[a[0]] ^ g9[a[1]];
+        b[3] = g14[a[3]] ^ g11[a[0]] ^ g13[a[1]] ^ g9[a[2]];
+        *p = getword(b);
     }
 }
 
