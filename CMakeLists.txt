@@ -84,6 +84,13 @@ ADD_EXECUTABLE(cbctests catch.hpp testmain.cpp ${CMAKE_CURRENT_BINARY_DIR}/tests
 ADD_EXECUTABLE(ofbtests catch.hpp testmain.cpp ${CMAKE_CURRENT_BINARY_DIR}/tests/ofbtests.cpp)
 ADD_EXECUTABLE(cfb8tests catch.hpp testmain.cpp ${CMAKE_CURRENT_BINARY_DIR}/tests/cfb8tests.cpp)
 ADD_EXECUTABLE(cfb128tests catch.hpp testmain.cpp ${CMAKE_CURRENT_BINARY_DIR}/tests/cfb128tests.cpp)
+ADD_EXECUTABLE(alltests catch.hpp testmain.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/tests/ecbtests.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/tests/cbctests.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/tests/ofbtests.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/tests/cfb8tests.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/tests/cfb128tests.cpp
+)
 
 TARGET_LINK_LIBRARIES(selftest rijndael)
 TARGET_LINK_LIBRARIES(ecbtests rijndael)
@@ -91,6 +98,7 @@ TARGET_LINK_LIBRARIES(cbctests rijndael)
 TARGET_LINK_LIBRARIES(ofbtests rijndael)
 TARGET_LINK_LIBRARIES(cfb8tests rijndael)
 TARGET_LINK_LIBRARIES(cfb128tests rijndael)
+TARGET_LINK_LIBRARIES(alltests rijndael)
 
 ADD_CUSTOM_TARGET(doselftest COMMAND selftest -r xml -o selftest.xml)
 ADD_CUSTOM_TARGET(doecbtests COMMAND ecbtests -r xml -o ecbtests.xml)
