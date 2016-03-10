@@ -1,0 +1,29 @@
+version: 1.0.{build}-{branch}
+
+branches:
+    except:
+        - gh-pages
+
+skip_tags: true
+
+environment:
+    matrix:
+        - CMAKE_BUILD_TYPE: Debug
+        - CMAKE_BUILD_TYPE: Release
+        - CMAKE_BUILD_TYPE: Debug
+          CMAKE_GENERATOR: -GNinja
+        - CMAKE_BUILD_TYPE: Release
+          CMAKE_GENERATOR: -GNinja
+
+install:
+    - set PATH=%PATH%;C:/tools/ninja
+    - cinst ninja
+
+build_script:
+    - mkdir build && cd build
+    - cmake ${CMAKE_GENERATOR} ..
+    - cmake --build . --clean-first
+
+test_script:
+    - ctest -R regression
+
