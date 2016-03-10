@@ -109,3 +109,5 @@ ADD_TEST(NAME doofbtests COMMAND ofbtests -r xml -o ofbtests.xml)
 ADD_TEST(NAME docfb8tests COMMAND cfb8tests -r xml -o cfb8tests.xml)
 ADD_TEST(NAME docfb128tests COMMAND cfb128tests -r xml -o cfb128tests.xml)
 ADD_TEST(NAME doalltests COMMAND alltests -r xml -o alltests.xml)
+
+ADD_TEST(NAME regression COMMAND alltests ~[cfb8]~[mct],[cfb8]~[mmt]~[mct])
