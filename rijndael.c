@@ -129,14 +129,14 @@ void rijndael_rsubbytes(void *block, size_t block_size) {
 
 void rijndael_shiftrows(void *block, size_t block_size) {
     uint8_t *bytes = (uint8_t*)block;
-    size_t i, j, k, n[4] = { 0, 1, 2, 3 };
+    size_t n[4] = { 0, 1, 2, 3 };
     uint8_t c[4];
 
     if (block_size > 7) n[2] = 3;
     if (block_size > 6) n[3] = 4;
 
-    for (i = 1; i < 4; ++i) {
-        k = block_size - n[i];
+    for (size_t i = 1, j; i < 4; ++i) {
+        size_t k = block_size - n[i];
         for (j = 0; j < n[i]; ++j) {
             c[j] = bytes[j * 4 + i];
         }
@@ -151,21 +151,21 @@ void rijndael_shiftrows(void *block, size_t block_size) {
 
 void rijndael_rshiftrows(void *block, size_t block_size) {
     uint8_t *bytes = (uint8_t*)block;
-    size_t i, j, k, n[4] = { 0, 1, 2, 3 };
+    size_t n[4] = { 0, 1, 2, 3 };
     uint8_t c[4];
 
     if (block_size > 7) n[2] = 3;
     if (block_size > 6) n[3] = 4;
 
-    for (i = 1; i < 4; ++i) {
-        k = block_size - n[i];
-        for (j = k; j < block_size; ++j) {
+    for (size_t i = 1; i < 4; ++i) {
+        size_t k = block_size - n[i];
+        for (size_t j = k; j < block_size; ++j) {
             c[j - k] = bytes[j * 4 + i];
         }
-        for (j = 0; j < k; ++j) {
+        for (size_t j = 0; j < k; ++j) {
             bytes[(block_size - j - 1) * 4 + i] = bytes[(block_size - j - 1 - n[i]) * 4 + i];
         }
-        for (j = 0; j < n[i]; ++j) {
+        for (size_t j = 0; j < n[i]; ++j) {
             bytes[j * 4 + i] = c[j];
         }
     }
