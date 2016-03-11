@@ -367,23 +367,25 @@ size_t rijndael_encrypt_cfb8(rijndael_state *state, const void *plaintext, void 
     const uint8_t *indata = plaintext;
     uint8_t *outdata = ciphertext;
 
+    uint32_t block[8];
+
     size_t i, j;
 
     for (i = 0; i < size; i += 1) {
 
-        rijndael_encrypt_block(state, state->iv);
-
-        uint8_t t = *indata++;
-
-        t ^= state->iv[0];
-
-        *outdata++ = t;
-
-        for (j = state->block_size-1; j > 0; --j) {
-            state->iv[j] = (state->iv[j] >> 8) | (state->iv[j-1] << 24);
+        for (j = 0; j < state->block_size; ++j) {
+            block[j] = state->iv[j];
         }
 
-        state->iv[j] = (state->iv[j] >> 8) | (t << 24);
+        rijndael_encrypt_block(state, block);
+
+        uint8_t t = *outdata++ = *indata++ ^ block[0];
+
+        for (j = 1; j < state->block_size; ++j) {
+            state->iv[j-1] = (state->iv[j-1] >> 8) | (state->iv[j] << 24);
+        }
+
+        state->iv[j-1] = (state->iv[j-1] >> 8) | (t << 24);
     }
 
     return i;
@@ -462,23 +464,30 @@ size_t rijndael_decrypt_ofb(rijndael_state *state, const void *ciphertext, void 
 }
 
 size_t rijndael_decrypt_cfb8(rijndael_state *state, const void *ciphertext, void *plaintext, size_t size) {
-    uint8_t *indata, *outdata;
-    size_t i, j;
+    const uint8_t *indata = ciphertext;
+    uint8_t *outdata = plaintext;
 
-    indata = (uint8_t*)ciphertext;
-    outdata = (uint8_t*)plaintext;
+    uint32_t block[8];
+
+    size_t i, j;
 
     for (i = 0; i < size; i += 1) {
 
-        rijndael_encrypt_block(state, state->iv);
-
-        outdata[i] = indata[i] ^ state->iv[0];
-
-        for (j = state->block_size-1; j > 0; --j) {
-            state->iv[j] = (state->iv[j] >> 8) | (state->iv[j-1] << 24);
+        for (j = 0; j < state->block_size; ++j) {
+            block[j] = state->iv[j];
         }
 
-        state->iv[j] = (state->iv[j] >> 8) | (outdata[i] << 24);
+        rijndael_encrypt_block(state, block);
+
+        uint8_t t = *indata++;
+
+        *outdata++ = t ^ block[0];
+
+        for (j = 1; j < state->block_size; ++j) {
+            state->iv[j-1] = (state->iv[j-1] >> 8) | (state->iv[j] << 24);
+        }
+
+        state->iv[j-1] = (state->iv[j-1] >> 8) | (t << 24);
     }
 
     return i;

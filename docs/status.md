@@ -30,7 +30,7 @@
 |          | KeySbox | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] |
 |          | VarKey  | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] |
 |          | VarTxt  | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] |
-|          | MMT     | ![FAIL][✗] | ![FAIL][✗] | ![FAIL][✗] | ![FAIL][✗] | ![FAIL][✗] | ![FAIL][✗] |
+|          | MMT     | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] | ![PASS][✓] |
 |          | MCT     | ![FAIL][✗] | ![FAIL][✗] | ![FAIL][✗] | ![FAIL][✗] | ![FAIL][✗] | ![FAIL][✗] |
 | CFB-1*   | ------- | ![FAIL][✗] | ![FAIL][✗] | ![FAIL][✗] | ![FAIL][✗] | ![FAIL][✗] | ![FAIL][✗] |
 
