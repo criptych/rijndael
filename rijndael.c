@@ -402,7 +402,7 @@ size_t rijndael_encrypt_cfb(rijndael_state *state, const void *plaintext, void *
         rijndael_encrypt_block(state, state->iv);
 
         for (size_t j = 0; j < state->block_size; ++j) {
-            putword(outdata++, state->iv[j] = getword(indata++) ^ state->iv[j]);
+            putword(outdata++, state->iv[j] ^= getword(indata++));
         }
     }
 
