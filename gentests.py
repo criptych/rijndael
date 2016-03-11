@@ -35,36 +35,35 @@ static inline std::string buf2str(const uint8_t *buf, size_t len) {
 
 CXX_TEST = """\
 TEST_CASE("%(mode)s%(test)s%(size)s-%(sec)s-%(COUNT)s", "%(tags)s") {
+    aes_state state;
 """
 
 CXX_DATA = """\
     const uint8_t %s[] = { %s };
 """
 
-CXX_ENCRYPT = """\
-    aes_state state;
-    uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+CXX_INIT = """\
+    CAPTURE(buf2str(KEY, sizeof(KEY)));
+    REQUIRE(aes_init(&state, KEY, 8 * sizeof KEY));
+"""
+
+CXX_INIT_IV = """\
     CAPTURE(buf2str(KEY, sizeof(KEY)));
     CAPTURE(buf2str(IV, sizeof(IV)));
+    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+"""
+
+CXX_ENCRYPT = """\
+    uint8_t RESULT[sizeof(CIPHERTEXT)];
     CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
     REQUIRE(aes_encrypt_%(mode)s(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
-    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
-    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
-    REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
-}
-
 """
 
 CXX_ENCRYPT_MCT = """\
-    aes_state state;
-    uint8_t RESULT[sizeof(CIPHERTEXT)];
-    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
-    CAPTURE(buf2str(KEY, sizeof(KEY)));
-    CAPTURE(buf2str(IV, sizeof(IV)));
-    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
-    REQUIRE(aes_encrypt_%(mode)s(&state, PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == sizeof(CIPHERTEXT));
     for (size_t i = 0; i < 999; ++i) aes_encrypt_%(mode)s(&state, RESULT, RESULT, sizeof(RESULT));
+"""
+
+CXX_ENCRYPT_END = """\
     CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
     CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == 0);
@@ -73,29 +72,16 @@ CXX_ENCRYPT_MCT = """\
 """
 
 CXX_DECRYPT = """\
-    aes_state state;
     uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
-    CAPTURE(buf2str(KEY, sizeof(KEY)));
-    CAPTURE(buf2str(IV, sizeof(IV)));
     CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
     REQUIRE(aes_decrypt_%(mode)s(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
-    CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
-    CAPTURE(buf2str(RESULT, sizeof(RESULT)));
-    REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
-}
-
 """
 
 CXX_DECRYPT_MCT = """\
-    aes_state state;
-    uint8_t RESULT[sizeof(PLAINTEXT)];
-    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
-    CAPTURE(buf2str(KEY, sizeof(KEY)));
-    CAPTURE(buf2str(IV, sizeof(IV)));
-    CAPTURE(buf2str(CIPHERTEXT, sizeof(CIPHERTEXT)));
-    REQUIRE(aes_decrypt_%(mode)s(&state, CIPHERTEXT, RESULT, sizeof(CIPHERTEXT)) == sizeof(PLAINTEXT));
     for (size_t i = 0; i < 999; ++i) aes_decrypt_%(mode)s(&state, RESULT, RESULT, sizeof(RESULT));
+"""
+
+CXX_DECRYPT_END = """\
     CAPTURE(buf2str(PLAINTEXT, sizeof(PLAINTEXT)));
     CAPTURE(buf2str(RESULT, sizeof(RESULT)));
     REQUIRE(memcmp(PLAINTEXT, RESULT, sizeof(PLAINTEXT)) == 0);
@@ -177,24 +163,23 @@ for mode, test, size in search:
                 if sec and 'COUNT' in vals:
                     vals.update(locals())
 
-                    if 'IV' not in vals:
-                        vals['IV'] = '00'*16
-
-                    t = CXX_TEST % vals
+                    src = CXX_TEST % vals
                     for k in 'KEY', 'IV', 'PLAINTEXT', 'CIPHERTEXT':
                         if k in vals:
-                            t += CXX_DATA % (k, hexformat(vals[k]))
+                            src += CXX_DATA % (k, hexformat(vals[k]))
+
+                    src += CXX_INIT_IV if 'IV' in vals else CXX_INIT
 
                     if sec == 'ENCRYPT':
+                        src += CXX_ENCRYPT % { 'mode': mode.lower() }
                         if test == 'MCT':
-                            src = (t + CXX_ENCRYPT_MCT % { 'mode': mode.lower() })
-                        else:
-                            src = (t + CXX_ENCRYPT % { 'mode': mode.lower() })
+                            src += CXX_ENCRYPT_MCT % { 'mode': mode.lower() }
+                        src += CXX_ENCRYPT_END
                     elif sec == 'DECRYPT':
+                        src += CXX_DECRYPT % { 'mode': mode.lower() }
                         if test == 'MCT':
-                            src = (t + CXX_DECRYPT_MCT % { 'mode': mode.lower() })
-                        else:
-                            src = (t + CXX_DECRYPT % { 'mode': mode.lower() })
+                            src += CXX_DECRYPT_MCT % { 'mode': mode.lower() }
+                        src += CXX_DECRYPT_END
                     else:
                         print('*** Unknown section "%s"' % sec)
 
