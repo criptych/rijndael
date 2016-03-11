@@ -109,3 +109,10 @@ ADD_TEST(NAME docfb128tests COMMAND cfb128tests -r xml -o cfb128tests.xml)
 ADD_TEST(NAME doalltests COMMAND alltests -r xml -o alltests.xml)
 
 ADD_TEST(NAME regression COMMAND alltests ~[cfb8]~[mct],[cfb8]~[mmt]~[mct])
+
+ADD_CUSTOM_TARGET(genstats
+    COMMAND alltests -r xml -o alltests.xml && false || python ${CMAKE_CURRENT_SOURCE_DIR}/genstats.py alltests.xml ${CMAKE_CURRENT_SOURCE_DIR}/docs/status.md
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/genstats.py
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+

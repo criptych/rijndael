@@ -1,3 +1,7 @@
+################################################################################
+#
+################################################################################
+
 # Known-Answer Test
 KAT_URL = 'http://csrc.nist.gov/groups/STM/cavp/documents/aes/KAT_AES.zip'
 KAT_FILE = 'KAT_AES.zip'
@@ -116,6 +120,8 @@ re_section = re.compile('^\[([^]]+)\]')
 re_variable = re.compile('^([A-Za-z0-9_]+) = (.+)$')
 re_continue = re.compile('^ +([^ ].*)$')
 
+################################################################################
+
 def get_test_file(url, fn):
     if not os.path.isfile(fn):
         print('Downloading "%s"...' % fn)
@@ -132,6 +138,8 @@ def get_test_file(url, fn):
 kat = get_test_file(KAT_URL, KAT_FILE)
 mct = get_test_file(MCT_URL, MCT_FILE)
 mmt = get_test_file(MMT_URL, MMT_FILE)
+
+################################################################################
 
 if not os.path.isdir('tests'):
     os.makedirs('tests')
@@ -225,7 +233,13 @@ for mode, test, size in search:
 for k, v in sorted(tests.items()):
     open('tests/' + k.lower() + 'tests.cpp', 'wt').write(CXX_HEADER + ''.join(v))
 
+################################################################################
+
 print('%d test modules generated' % len(found))
 print('Tests not found: %s' % (', '.join(notfound) or 'None'))
 print('Extra files: %s' % (', '.join(names) or 'None'))
+
+################################################################################
+# EOF
+################################################################################
 
