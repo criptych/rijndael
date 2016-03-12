@@ -2,8 +2,12 @@
 #
 ################################################################################
 
-CHECK = unichr(0x2713)
-CROSS = unichr(0x2717)
+try:
+    CHECK = unichr(0x2713)
+    CROSS = unichr(0x2717)
+except NameError:
+    CHECK = chr(0x2713)
+    CROSS = chr(0x2717)
 
 STAT_HEADER = """\
 ### NIST CAVP Test Result Status
