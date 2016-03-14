@@ -65,7 +65,7 @@ void rijndael_init_tables(void) {
         uint8_t inv[256];
         inv[0] = 0;
         for (size_t i = 1; i < 256; ++i) {
-            for (size_t j = 0; j < 256; ++j) {
+            for (size_t j = 1; j < 256; ++j) {
                 if (galois(i, j) == 1) {
                     inv[i] = j;
                     break;
