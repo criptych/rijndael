@@ -273,29 +273,18 @@ void rijndael_decrypt_block(rijndael_state *state, void *block) {
  * General Rijndael algorithm
 \******************************************************************************/
 
-int rijndael_init(rijndael_state *state, const void *key, size_t key_size, size_t block_size, size_t num_rounds) {
+int rijndael_init(rijndael_state *state, const void *key, rijndael_key_size key_size, rijndael_block_size block_size) {
     rijndael_init_tables();
 
-    if (key_size < 128 || key_size > 256) return 0;
-    if (block_size < 128 || block_size > 256) return 0;
+    if (key_size < RJ_KEY_SIZE_128 || key_size > RJ_KEY_SIZE_256) return 0;
+    if (block_size < RJ_BLOCK_SIZE_128 || block_size > RJ_BLOCK_SIZE_256) return 0;
     if (!key) return 0;
-
-    /* convert number of bits to number of (32-bit) words, rounding down */
-    key_size = key_size >> 5;
-    block_size = block_size >> 5;
-
-    if (num_rounds > 14) {
-        num_rounds = 14;
-    }
-    if (num_rounds == 0) {
-        num_rounds = ((key_size > block_size) ? key_size : block_size) + 6;
-    }
-
-    size_t key_cols = (num_rounds + 1) * block_size;
 
     state->key_size = key_size;
     state->block_size = block_size;
-    state->num_rounds = num_rounds;
+    state->num_rounds = ((key_size > block_size) ? key_size : block_size) + 6;
+
+    size_t key_cols = (state->num_rounds + 1) * block_size;
 
     const uint32_t *k = key;
 
@@ -323,8 +312,8 @@ int rijndael_init(rijndael_state *state, const void *key, size_t key_size, size_
 
 /******************************************************************************/
 
-int rijndael_init_iv(rijndael_state *state, const void *key, size_t key_size, size_t block_size, size_t num_rounds, const void *iv) {
-    int rv = rijndael_init(state, key, key_size, block_size, num_rounds);
+int rijndael_init_iv(rijndael_state *state, const void *key, rijndael_key_size key_size, rijndael_block_size block_size, const void *iv) {
+    int rv = rijndael_init(state, key, key_size, block_size);
     if (rv) rijndael_set_iv(state, iv);
     return rv;
 }
@@ -581,14 +570,14 @@ size_t rijndael_decrypt_cfb(rijndael_state *state, const void *ct, void *pt, siz
  * AES wrapper functions
 \******************************************************************************/
 
-int aes_init(aes_state *state, const void *key, size_t key_size) {
-    return rijndael_init(state, key, (key_size + 63) & (~63), 128, 0);
+int aes_init(aes_state *state, const void *key, aes_key_size key_size) {
+    return rijndael_init(state, key, (key_size + 1) & (~1), RJ_BLOCK_SIZE_128);
 }
 
 /******************************************************************************/
 
 int aes_init_iv(aes_state *state, const void *key, size_t key_size, const void *iv) {
-    return rijndael_init_iv(state, key, (key_size + 63) & (~63), 128, 0, iv);
+    return rijndael_init_iv(state, key, (key_size + 1) & (~1), RJ_BLOCK_SIZE_128, iv);
 }
 
 /******************************************************************************/

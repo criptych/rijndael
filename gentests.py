@@ -38,13 +38,13 @@ CXX_DATA = """\
 
 CXX_INIT = """\
     CAPTURE(buf2str(KEY, sizeof(KEY)));
-    REQUIRE(aes_init(&state, KEY, 8 * sizeof KEY));
+    REQUIRE(aes_init(&state, KEY, AES_KEY_SIZE_%(key_size)d));
 """
 
 CXX_INIT_IV = """\
     CAPTURE(buf2str(KEY, sizeof(KEY)));
     CAPTURE(buf2str(IV, sizeof(IV)));
-    REQUIRE(aes_init_iv(&state, KEY, 8 * sizeof KEY, IV));
+    REQUIRE(aes_init_iv(&state, KEY, AES_KEY_SIZE_%(key_size)d, IV));
 """
 
 CXX_ENCRYPT = """\
@@ -162,7 +162,8 @@ for mode, test, size in search:
                         if k in vals:
                             src += CXX_DATA % (k, hexformat(vals[k]))
 
-                    src += CXX_INIT_IV if 'IV' in vals else CXX_INIT
+                    init = CXX_INIT_IV if 'IV' in vals else CXX_INIT
+                    src += init % { 'key_size': len(vals['KEY'] * 4) }
 
                     if sec == 'ENCRYPT':
                         src += CXX_ENCRYPT % { 'mode': mode.lower() }

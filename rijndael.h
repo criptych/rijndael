@@ -17,6 +17,32 @@ extern "C" {
 
 /******************************************************************************/
 
+typedef enum rijndael_mode {
+    RJ_MODE_ECB,
+    RJ_MODE_CBC,
+    RJ_MODE_OFB,
+    RJ_MODE_CFB,
+    RJ_MODE_CTR,
+} rijndael_mode;
+
+typedef enum rijndael_key_size {
+    RJ_KEY_SIZE_128 = 4,
+    RJ_KEY_SIZE_160 = 5,
+    RJ_KEY_SIZE_192 = 6,
+    RJ_KEY_SIZE_224 = 7,
+    RJ_KEY_SIZE_256 = 8,
+} rijndael_key_size;
+
+typedef enum rijndael_block_size {
+    RJ_BLOCK_SIZE_128 = 4,
+    RJ_BLOCK_SIZE_160 = 5,
+    RJ_BLOCK_SIZE_192 = 6,
+    RJ_BLOCK_SIZE_224 = 7,
+    RJ_BLOCK_SIZE_256 = 8,
+} rijndael_block_size;
+
+/******************************************************************************/
+
 /**
  * @brief
  * State used during encryption/decryption.
@@ -35,6 +61,8 @@ typedef struct rijndael_state {
     uint8_t block_size;
     /** Round count, 10 <= num_rounds <= 14. (AES: Must be 10, 12, or 14.) */
     uint8_t num_rounds;
+    /** Cipher mode, one of the rijndael_mode constants above. */
+    uint8_t cipher_mode;
 } rijndael_state;
 
 /**
@@ -46,7 +74,7 @@ typedef struct rijndael_state {
  *
  * @returns Zero (0) if parameters are invalid, non-zero otherwise.
  */
-int rijndael_init(rijndael_state *state, const void *key, size_t key_size, size_t block_size, size_t num_rounds);
+int rijndael_init(rijndael_state *state, const void *key, rijndael_key_size key_size, rijndael_block_size block_size);
 
 /**
  * Initialize state with the given key, parameters, and IV.
@@ -57,7 +85,7 @@ int rijndael_init(rijndael_state *state, const void *key, size_t key_size, size_
  *
  * @returns Zero (0) if parameters are invalid, non-zero otherwise.
  */
-int rijndael_init_iv(rijndael_state *state, const void *key, size_t key_size, size_t block_size, size_t num_rounds, const void *iv);
+int rijndael_init_iv(rijndael_state *state, const void *key, rijndael_key_size key_size, rijndael_block_size block_size, const void *iv);
 
 /**
  * Load a new IV into the state.
@@ -148,6 +176,22 @@ size_t rijndael_decrypt_cfb(rijndael_state *state, const void *ciphertext, void 
 
 /******************************************************************************/
 
+typedef enum aes_mode {
+    AES_MODE_ECB = RJ_MODE_ECB,
+    AES_MODE_CBC = RJ_MODE_CBC,
+    AES_MODE_OFB = RJ_MODE_OFB,
+    AES_MODE_CFB = RJ_MODE_CFB,
+    AES_MODE_CTR = RJ_MODE_CTR,
+} aes_mode;
+
+typedef enum aes_key_size {
+    AES_KEY_SIZE_128 = RJ_KEY_SIZE_128,
+    AES_KEY_SIZE_160 = RJ_KEY_SIZE_160,
+    AES_KEY_SIZE_192 = RJ_KEY_SIZE_192,
+    AES_KEY_SIZE_224 = RJ_KEY_SIZE_224,
+    AES_KEY_SIZE_256 = RJ_KEY_SIZE_256,
+} aes_key_size;
+
 typedef rijndael_state aes_state;
 
 /**
@@ -159,7 +203,7 @@ typedef rijndael_state aes_state;
  *
  * @returns Zero (0) if parameters are invalid, non-zero otherwise.
  */
-int aes_init(aes_state *state, const void *key, size_t key_size);
+int aes_init(aes_state *state, const void *key, aes_key_size key_size);
 
 /**
  * Initialize state with the given key, parameters, and IV.
@@ -170,7 +214,7 @@ int aes_init(aes_state *state, const void *key, size_t key_size);
  *
  * @returns Zero (0) if parameters are invalid, non-zero otherwise.
  */
-int aes_init_iv(aes_state *state, const void *key, size_t key_size, const void *iv);
+int aes_init_iv(aes_state *state, const void *key, aes_key_size key_size, const void *iv);
 
 /**
  * Load a new IV into the state.
