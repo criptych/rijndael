@@ -204,11 +204,15 @@ int rijndael_init(rijndael_state *state, const void *key, size_t key_size, size_
 
     if (key_size < 128 || key_size > 256) return 0;
     if (block_size < 128 || block_size > 256) return 0;
+    if (!key) return 0;
 
     /* convert number of bits to number of (32-bit) words, rounding down */
     key_size = key_size >> 5;
     block_size = block_size >> 5;
 
+    if (num_rounds > 14) {
+        num_rounds = 14;
+    }
     if (num_rounds == 0) {
         num_rounds = ((key_size > block_size) ? key_size : block_size) + 6;
     }
