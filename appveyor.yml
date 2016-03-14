@@ -7,6 +7,10 @@ branches:
 skip_tags: true
 
 environment:
+    global:
+        CMAKE_C_COMPILER: gcc
+        CMAKE_CXX_COMPILER: g++
+
     matrix:
         - CMAKE_BUILD_TYPE: Debug
         - CMAKE_BUILD_TYPE: Release
