@@ -76,13 +76,7 @@ ADD_CUSTOM_COMMAND(
         ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-ADD_EXECUTABLE(selftest catch.hpp testmain.cpp selftest.cpp)
-ADD_EXECUTABLE(ecbtests catch.hpp testmain.cpp ${CMAKE_CURRENT_BINARY_DIR}/tests/ecbtests.cpp)
-ADD_EXECUTABLE(cbctests catch.hpp testmain.cpp ${CMAKE_CURRENT_BINARY_DIR}/tests/cbctests.cpp)
-ADD_EXECUTABLE(ofbtests catch.hpp testmain.cpp ${CMAKE_CURRENT_BINARY_DIR}/tests/ofbtests.cpp)
-ADD_EXECUTABLE(cfb8tests catch.hpp testmain.cpp ${CMAKE_CURRENT_BINARY_DIR}/tests/cfb8tests.cpp)
-ADD_EXECUTABLE(cfb128tests catch.hpp testmain.cpp ${CMAKE_CURRENT_BINARY_DIR}/tests/cfb128tests.cpp)
-ADD_EXECUTABLE(alltests catch.hpp testmain.cpp
+ADD_EXECUTABLE(alltests catch.hpp testmain.cpp selftest.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/tests/ecbtests.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/tests/cbctests.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/tests/ofbtests.cpp
@@ -90,22 +84,10 @@ ADD_EXECUTABLE(alltests catch.hpp testmain.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/tests/cfb128tests.cpp
 )
 
-TARGET_LINK_LIBRARIES(selftest rijndael)
-TARGET_LINK_LIBRARIES(ecbtests rijndael)
-TARGET_LINK_LIBRARIES(cbctests rijndael)
-TARGET_LINK_LIBRARIES(ofbtests rijndael)
-TARGET_LINK_LIBRARIES(cfb8tests rijndael)
-TARGET_LINK_LIBRARIES(cfb128tests rijndael)
 TARGET_LINK_LIBRARIES(alltests rijndael)
 
 ENABLE_TESTING()
 
-ADD_TEST(NAME doselftest COMMAND selftest -r xml -o selftest.xml)
-ADD_TEST(NAME doecbtests COMMAND ecbtests -r xml -o ecbtests.xml)
-ADD_TEST(NAME docbctests COMMAND cbctests -r xml -o cbctests.xml)
-ADD_TEST(NAME doofbtests COMMAND ofbtests -r xml -o ofbtests.xml)
-ADD_TEST(NAME docfb8tests COMMAND cfb8tests -r xml -o cfb8tests.xml)
-ADD_TEST(NAME docfb128tests COMMAND cfb128tests -r xml -o cfb128tests.xml)
 ADD_TEST(NAME doalltests COMMAND alltests -r xml -o alltests.xml)
 
 ADD_TEST(NAME regression COMMAND alltests ~[mct])
