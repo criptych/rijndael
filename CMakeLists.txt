@@ -76,7 +76,7 @@ ADD_CUSTOM_COMMAND(
         ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-ADD_EXECUTABLE(alltests catch.hpp testmain.cpp selftest.cpp
+ADD_EXECUTABLE(catch catch.hpp testmain.cpp selftest.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/tests/ecbtests.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/tests/cbctests.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/tests/ofbtests.cpp
@@ -84,16 +84,15 @@ ADD_EXECUTABLE(alltests catch.hpp testmain.cpp selftest.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/tests/cfb128tests.cpp
 )
 
-TARGET_LINK_LIBRARIES(alltests rijndael)
+TARGET_LINK_LIBRARIES(catch rijndael)
 
 ENABLE_TESTING()
 
-ADD_TEST(NAME doalltests COMMAND alltests -r xml -o alltests.xml)
-
-ADD_TEST(NAME regression COMMAND alltests ~[mct])
+ADD_TEST(NAME regression COMMAND catch ~[mct])
 
 ADD_CUSTOM_TARGET(genstats
-    COMMAND alltests -r xml -o alltests.xml && false || python ${CMAKE_CURRENT_SOURCE_DIR}/genstats.py alltests.xml ${CMAKE_CURRENT_SOURCE_DIR}/docs/status.md
+    # "&& false ||" to ensure both steps always run
+    COMMAND catch -r xml -o catch.xml && false || python ${CMAKE_CURRENT_SOURCE_DIR}/genstats.py catch.xml ${CMAKE_CURRENT_SOURCE_DIR}/docs/status.md
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/genstats.py
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
