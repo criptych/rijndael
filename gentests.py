@@ -163,7 +163,7 @@ for mode, test, size in search:
                             src += CXX_DATA % (k, hexformat(vals[k]))
 
                     init = CXX_INIT_IV if 'IV' in vals else CXX_INIT
-                    src += init % { 'key_size': len(vals['KEY'] * 4) }
+                    src += init % { 'key_size': len(vals['KEY']) * 4 }
 
                     if sec == 'ENCRYPT':
                         src += CXX_ENCRYPT % { 'mode': mode.lower() }
@@ -205,10 +205,10 @@ for mode, test, size in search:
                     vals[var] += m.group(1)
                     continue
 
+        del names[name]
+
     else:
         notfound.append(name)
-
-    del names[name]
 
 for k, v in sorted(tests.items()):
     open('tests/' + k.lower() + 'tests.cpp', 'wt').write(CXX_HEADER + ''.join(v))
