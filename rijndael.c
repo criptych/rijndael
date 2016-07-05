@@ -276,9 +276,10 @@ void rijndael_decrypt_block(rijndael_state *state, void *block) {
 int rijndael_init(rijndael_state *state, const void *key, rijndael_key_size key_size, rijndael_block_size block_size) {
     rijndael_init_tables();
 
+    if (!state) return 0;
+    if (!key) return 0;
     if (key_size < RJ_KEY_SIZE_128 || key_size > RJ_KEY_SIZE_256) return 0;
     if (block_size < RJ_BLOCK_SIZE_128 || block_size > RJ_BLOCK_SIZE_256) return 0;
-    if (!key) return 0;
 
     state->key_size = key_size;
     state->block_size = block_size;
