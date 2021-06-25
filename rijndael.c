@@ -72,6 +72,19 @@ static inline void putword(void *p, uint32_t w) {
  * Hidden utility functions (exported but not part of the API proper)
 \******************************************************************************/
 
+void rijndael_init_tables(void);
+void rijndael_addroundkey(void *block, size_t block_size, const void *key);
+void rijndael_subbytes(void *block, size_t block_size);
+void rijndael_rsubbytes(void *block, size_t block_size);
+void rijndael_shiftrows(void *block, size_t block_size);
+void rijndael_rshiftrows(void *block, size_t block_size);
+void rijndael_mixcolumns(void *block, size_t block_size);
+void rijndael_rmixcolumns(void *block, size_t block_size);
+void rijndael_encrypt_block(rijndael_state *state, void *block);
+void rijndael_decrypt_block(rijndael_state *state, void *block);
+
+/******************************************************************************/
+
 void rijndael_init_tables(void) {
     static int initialized = 0;
 
@@ -283,7 +296,7 @@ int rijndael_init(rijndael_state *state, const void *key, rijndael_key_size key_
 
     state->key_size = key_size;
     state->block_size = block_size;
-    state->num_rounds = ((key_size > block_size) ? key_size : block_size) + 6;
+    state->num_rounds = (((int)key_size > (int)block_size) ? key_size : block_size) + 6;
 
     size_t key_cols = (state->num_rounds + 1) * block_size;
 
@@ -481,13 +494,13 @@ size_t rijndael_encrypt_cfb8(rijndael_state *state, const void *pt, void *ct, si
 
         rijndael_encrypt_block(state, block);
 
-        uint8_t t = *ctw++ = *ptw++ ^ block[0];
+        uint8_t t = *ctw++ = (uint8_t)(*ptw++ ^ block[0]);
 
         for (j = 1; j < state->block_size; ++j) {
             state->iv[j-1] = (state->iv[j-1] >> 8) | (state->iv[j] << 24);
         }
 
-        state->iv[j-1] = (state->iv[j-1] >> 8) | (t << 24);
+        state->iv[j-1] = (state->iv[j-1] >> 8) | (uint32_t)(t << 24);
     }
 
     return i;
@@ -513,7 +526,7 @@ size_t rijndael_decrypt_cfb8(rijndael_state *state, const void *ct, void *pt, si
 
         uint8_t t = *ctw++;
 
-        *ptw++ = t ^ block[0];
+        *ptw++ = (uint8_t)(t ^ block[0]);
 
         for (j = 1; j < state->block_size; ++j) {
             state->iv[j-1] = (state->iv[j-1] >> 8) | (state->iv[j] << 24);
@@ -577,7 +590,7 @@ int aes_init(aes_state *state, const void *key, aes_key_size key_size) {
 
 /******************************************************************************/
 
-int aes_init_iv(aes_state *state, const void *key, size_t key_size, const void *iv) {
+int aes_init_iv(aes_state *state, const void *key, aes_key_size key_size, const void *iv) {
     return rijndael_init_iv(state, key, (key_size + 1) & (~1), RJ_BLOCK_SIZE_128, iv);
 }
 

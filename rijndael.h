@@ -7,6 +7,7 @@
 
 /******************************************************************************/
 
+#include <stddef.h>
 #include <inttypes.h>
 
 /******************************************************************************/
@@ -22,7 +23,7 @@ typedef enum rijndael_mode {
     RJ_MODE_CBC,
     RJ_MODE_OFB,
     RJ_MODE_CFB,
-    RJ_MODE_CTR,
+    RJ_MODE_CTR
 } rijndael_mode;
 
 typedef enum rijndael_key_size {
@@ -30,7 +31,7 @@ typedef enum rijndael_key_size {
     RJ_KEY_SIZE_160 = 5,
     RJ_KEY_SIZE_192 = 6,
     RJ_KEY_SIZE_224 = 7,
-    RJ_KEY_SIZE_256 = 8,
+    RJ_KEY_SIZE_256 = 8
 } rijndael_key_size;
 
 typedef enum rijndael_block_size {
@@ -38,7 +39,7 @@ typedef enum rijndael_block_size {
     RJ_BLOCK_SIZE_160 = 5,
     RJ_BLOCK_SIZE_192 = 6,
     RJ_BLOCK_SIZE_224 = 7,
-    RJ_BLOCK_SIZE_256 = 8,
+    RJ_BLOCK_SIZE_256 = 8
 } rijndael_block_size;
 
 /******************************************************************************/
@@ -181,7 +182,7 @@ typedef enum aes_mode {
     AES_MODE_CBC = RJ_MODE_CBC,
     AES_MODE_OFB = RJ_MODE_OFB,
     AES_MODE_CFB = RJ_MODE_CFB,
-    AES_MODE_CTR = RJ_MODE_CTR,
+    AES_MODE_CTR = RJ_MODE_CTR
 } aes_mode;
 
 typedef enum aes_key_size {
@@ -189,7 +190,7 @@ typedef enum aes_key_size {
     AES_KEY_SIZE_160 = RJ_KEY_SIZE_160,
     AES_KEY_SIZE_192 = RJ_KEY_SIZE_192,
     AES_KEY_SIZE_224 = RJ_KEY_SIZE_224,
-    AES_KEY_SIZE_256 = RJ_KEY_SIZE_256,
+    AES_KEY_SIZE_256 = RJ_KEY_SIZE_256
 } aes_key_size;
 
 typedef rijndael_state aes_state;

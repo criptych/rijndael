@@ -37,6 +37,10 @@ ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "/arch:SSE2")     # Enable SSE2 opcodes
 # GCC/Clang options
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Wall")          # Enable all (actually most) warnings
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Weverything")   # (Clang) Enable ALL warnings
+ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Wno-unused-macros") # (Clang) Disable unused-macros warning
+ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Wno-missing-prototypes") # (Clang) Disable missing-prototypes warning
+ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Wno-conversion") # (Clang) Disable conversion warning
+ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Wno-exit-time-destructors") # (Clang) Disable exit-time-destructors warning
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Wextra")        # (GCC) Enable more (all?) warnings
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Wpedantic")     # (GCC) Disable language extensions
 ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-Werror")        # Treat warnings as errors
@@ -47,6 +51,10 @@ ADD_C_COMPILER_FLAG(CMAKE_C_FLAGS "-msse2")         # Enable SSE2 opcodes
 
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Wall")          # Enable all (actually most) warnings
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Weverything")   # (Clang) Enable ALL warnings
+ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Wno-unused-macros") # (Clang) Disable unused-macros warning
+ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Wno-missing-prototypes") # (Clang) Disable missing-prototypes warning
+ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Wno-conversion") # (Clang) Disable conversion warning
+ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Wno-exit-time-destructors") # (Clang) Disable exit-time-destructors warning
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Wextra")        # (GCC) Enable more (all?) warnings
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Wpedantic")     # (GCC) Disable language extensions
 ADD_CXX_COMPILER_FLAG(CMAKE_CXX_FLAGS "-Werror")        # Treat warnings as errors
